@@ -34,6 +34,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setLoading(true);
             await signIn(email, password);
         } catch (err: any) {
+            console.error('Login Error:', err.code, err.message);
             setError(getErrorMessage(err.code));
             throw err;
         } finally {
@@ -47,6 +48,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             setLoading(true);
             await signUp(email, password);
         } catch (err: any) {
+            console.error('Registration Error:', err.code, err.message);
             setError(getErrorMessage(err.code));
             throw err;
         } finally {
@@ -99,6 +101,6 @@ const getErrorMessage = (errorCode: string): string => {
         case 'auth/too-many-requests':
             return 'Too many attempts. Please try again later';
         default:
-            return 'An error occurred. Please try again';
+            return `An error occurred (${errorCode}). Please try again`;
     }
 };

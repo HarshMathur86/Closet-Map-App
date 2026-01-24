@@ -7,9 +7,9 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     Platform,
-    SafeAreaView,
     Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';

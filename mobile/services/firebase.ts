@@ -5,13 +5,27 @@ import {
     createUserWithEmailAndPassword,
     signOut as firebaseSignOut,
     onAuthStateChanged,
-    User
+    User,
+    initializeAuth,
+    // @ts-ignore
+    getReactNativePersistence,
+    Auth
 } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 import { FIREBASE_CONFIG } from '../constants/Config';
 
 // Initialize Firebase
 const app = getApps().length === 0 ? initializeApp(FIREBASE_CONFIG) : getApp();
-const auth = getAuth(app);
+
+let auth: Auth;
+try {
+    auth = initializeAuth(app, {
+        persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+    });
+} catch (e) {
+    // if auth is already initialized use getAuth
+    auth = getAuth(app);
+}
 
 export { auth };
 
