@@ -1,0 +1,78 @@
+# ----------------------
+# General / OS / IDEs
+# ----------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+desktop.ini
+*.log
+*.pem
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ----------------------
+# Dependencies
+# ----------------------
+node_modules/
+
+# ----------------------
+# Environment Variables
+# ----------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# ----------------------
+# Debugging
+# ----------------------
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ----------------------
+# Backend (Node/Express)
+# ----------------------
+backend/dist/
+backend/build/
+backend/coverage/
+
+# ----------------------
+# Mobile (Expo / React Native)
+# ----------------------
+# Expo
+.expo/
+web-build/
+dist/
+mobile/constants/Config.ts
+
+# Metro
+.metro-health-check*
+
+# TypeScript
+*.tsbuildinfo
+
+# Expo Generated Native Projects (Prebuild)
+# If you ever decide to eject or move to bare workflow,
+# you might want to stop ignoring these.
+ios/
+android/
+.kotlin/
+*.jks
+*.key
+*.p8
+*.p12
+*.mobileprovision
+*.orig.*
+
+# Expo Types
+expo-env.d.ts
+
+
