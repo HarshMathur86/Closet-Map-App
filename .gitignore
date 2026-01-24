@@ -51,7 +51,6 @@ backend/coverage/
 .expo/
 web-build/
 dist/
-mobile/constants/Config.ts
 
 # Metro
 .metro-health-check*
