@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     ScrollView,
     Alert,
+    Linking,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../context/AuthContext';
@@ -96,13 +97,9 @@ export default function ProfileScreen() {
                     ABOUT
                 </Text>
                 <View style={[styles.card, { backgroundColor: colors.surface }]}>
-                    <View style={[styles.infoRow, styles.themeOptionBorder, { borderBottomColor: colors.border }]}>
-                        <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Version</Text>
-                        <Text style={[styles.infoValue, { color: colors.text }]}>1.0.0</Text>
-                    </View>
                     <View style={styles.infoRow}>
-                        <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Build</Text>
-                        <Text style={[styles.infoValue, { color: colors.text }]}>2026.01.24</Text>
+                        <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Version</Text>
+                        <Text style={[styles.infoValue, { color: colors.text }]}>1.0.1</Text>
                     </View>
                 </View>
             </View>
@@ -117,6 +114,15 @@ export default function ProfileScreen() {
             </TouchableOpacity>
 
             {/* Footer */}
+            <TouchableOpacity
+                onPress={() => Linking.openURL('https://github.com/HarshMathur86')}
+                style={styles.madeByContainer}
+            >
+                <Text style={[styles.madeByText, { color: colors.textSecondary }]}>
+                    Made with ❤️ by <Text style={[styles.link, { color: colors.primary }]}>HarshMathur86</Text>
+                </Text>
+            </TouchableOpacity>
+
             <Text style={[styles.footer, { color: colors.textMuted }]}>
                 ClosetMap © 2026
             </Text>
@@ -216,7 +222,19 @@ const styles = StyleSheet.create({
     },
     footer: {
         textAlign: 'center',
+        marginTop: Spacing.md,
+        fontSize: FontSize.xs,
+        opacity: 0.7,
+    },
+    madeByContainer: {
         marginTop: Spacing.xxl,
+        alignItems: 'center',
+    },
+    madeByText: {
         fontSize: FontSize.sm,
+        fontWeight: '500',
+    },
+    link: {
+        fontWeight: '700',
     },
 });

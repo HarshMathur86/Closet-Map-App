@@ -100,6 +100,8 @@ const getErrorMessage = (errorCode: string): string => {
             return 'Please enter a valid email address';
         case 'auth/too-many-requests':
             return 'Too many attempts. Please try again later';
+        case 'auth/invalid-credential':
+            return 'Invalid email or password. Account may not exist.';
         default:
             return `An error occurred (${errorCode}). Please try again`;
     }
