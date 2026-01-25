@@ -5,7 +5,6 @@ const cors = require('cors');
 const { v2: cloudinary } = require('cloudinary');
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./src/swagger");
-const userRoutes = require("./src/routes/user.routes");
 
 // Import routes
 const bagRoutes = require('./src/routes/bags');
@@ -18,7 +17,6 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-app.use("api", userRoutes);
 
 // Swagger
 if (process.env.NODE_ENV === "dev") {
@@ -42,7 +40,23 @@ app.use('/api/bags', bagRoutes);
 app.use('/api/clothes', clothRoutes);
 app.use('/api/export', exportRoutes);
 
-// Health check
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     summary: Health check endpoint
+ *     tags: [General]
+ *     responses:
+ *       200:
+ *         description: Server is healthy
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status: { type: string }
+ *                 timestamp: { type: string, format: date-time }
+ */
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });

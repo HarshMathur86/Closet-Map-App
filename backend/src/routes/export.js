@@ -26,6 +26,25 @@ const generateBarcodeBuffer = async (text) => {
 };
 
 // Export all barcodes as PDF
+/**
+ * @swagger
+ * /export/barcodes:
+ *   get:
+ *     summary: Export all bag barcodes for the user as a PDF
+ *     tags: [Export]
+ *     responses:
+ *       200:
+ *         description: PDF file containing barcodes
+ *         content:
+ *           application/pdf:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       404:
+ *         description: No bags found
+ *       500:
+ *         description: Server error
+ */
 router.get('/barcodes', async (req, res) => {
     try {
         const bags = await Bag.find({ createdBy: req.userId }).sort({ bagId: 1 });
@@ -111,7 +130,30 @@ router.get('/barcodes', async (req, res) => {
     }
 });
 
-// Get single barcode image
+/**
+ * @swagger
+ * /export/barcode/{bagId}:
+ *   get:
+ *     summary: Get a single barcode image for a bag
+ *     tags: [Export]
+ *     parameters:
+ *       - in: path
+ *         name: bagId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The bag ID (e.g., B1)
+ *     responses:
+ *       200:
+ *         description: Barcode image (PNG)
+ *         content:
+ *           image/png:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       404:
+ *         description: Bag not found
+ */
 router.get('/barcode/:bagId', async (req, res) => {
     try {
         const bag = await Bag.findOne({

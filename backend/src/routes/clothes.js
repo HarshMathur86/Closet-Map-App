@@ -6,10 +6,134 @@ const Cloth = require('../models/Cloth');
 const Bag = require('../models/Bag');
 const authMiddleware = require('../middleware/auth');
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Cloth:
+ *       type: object
+ *       required:
+ *         - clothId
+ *         - name
+ *         - imageUrl
+ *         - color
+ *         - containerBagId
+ *         - createdBy
+ *       properties:
+ *         clothId:
+ *           type: string
+ *           description: Unique identifier for the cloth (e.g., C-A1B2C3D4)
+ *         name:
+ *           type: string
+ *           description: Name of the item
+ *         imageUrl:
+ *           type: string
+ *           description: Cloudinary URL of the image
+ *         imagePublicId:
+ *           type: string
+ *           description: Cloudinary public ID for the image
+ *         color:
+ *           type: string
+ *           description: Primary color of the item
+ *         owner:
+ *           type: string
+ *           description: Owner of the item (e.g., Person A, Person B)
+ *         category:
+ *           type: string
+ *           description: Category of the item (e.g., T-Shirt, Jeans)
+ *         containerBagId:
+ *           type: string
+ *           description: ID of the bag containing this item
+ *         bagName:
+ *           type: string
+ *           description: Name of the bag containing this item (populated on fetch)
+ *         lastMovedTimestamp:
+ *           type: string
+ *           format: date-time
+ *           description: When the item was last moved between bags
+ *         favorite:
+ *           type: boolean
+ *           description: Whether the item is marked as favorite
+ *         notes:
+ *           type: string
+ *           description: Additional notes about the item
+ *         createdBy:
+ *           type: string
+ *           description: Firebase User ID of the owner
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: Timestamp when the item was created
+ *       example:
+ *         clothId: "C-A1B2C3D4"
+ *         name: "Blue Denim Jeans"
+ *         imageUrl: "https://res.cloudinary.com/..."
+ *         color: "Blue"
+ *         owner: "Harsh"
+ *         category: "Jeans"
+ *         containerBagId: "B1"
+ *         bagName: "Main Suitcase"
+ *         favorite: true
+ *         notes: "Leis jeans"
+ */
+
 // Apply auth middleware to all routes
 router.use(authMiddleware);
 
-// Get all clothes for user with filters
+/**
+ * @swagger
+ * /clothes:
+ *   get:
+ *     summary: Get all clothes for the authenticated user with filters
+ *     tags: [Clothes]
+ *     parameters:
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           default: createdAt
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *           default: desc
+ *       - in: query
+ *         name: color
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: owner
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: bagId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: favorite
+ *         schema:
+ *           type: string
+ *           enum: ["true", "false"]
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         description: Search by name, color, owner, or category
+ *     responses:
+ *       200:
+ *         description: List of clothes fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Cloth'
+ */
 router.get('/', async (req, res) => {
     try {
         const {
@@ -63,7 +187,36 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Get clothes by bag barcode (for scanner)
+/**
+ * @swagger
+ * /clothes/scan/{barcodeValue}:
+ *   get:
+ *     summary: Get clothes in a bag by scanning its barcode
+ *     tags: [Clothes]
+ *     parameters:
+ *       - in: path
+ *         name: barcodeValue
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The barcode value of the bag
+ *     responses:
+ *       200:
+ *         description: Bag and its clothes fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 bag:
+ *                   $ref: '#/components/schemas/Bag'
+ *                 clothes:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Cloth'
+ *       404:
+ *         description: Bag not found
+ */
 router.get('/scan/:barcodeValue', async (req, res) => {
     try {
         const bag = await Bag.findOne({
@@ -90,7 +243,28 @@ router.get('/scan/:barcodeValue', async (req, res) => {
     }
 });
 
-// Get single cloth
+/**
+ * @swagger
+ * /clothes/{clothId}:
+ *   get:
+ *     summary: Get a single cloth item by its ID
+ *     tags: [Clothes]
+ *     parameters:
+ *       - in: path
+ *         name: clothId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Cloth details fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cloth'
+ *       404:
+ *         description: Cloth not found
+ */
 router.get('/:clothId', async (req, res) => {
     try {
         const cloth = await Cloth.findOne({
@@ -114,7 +288,49 @@ router.get('/:clothId', async (req, res) => {
     }
 });
 
-// Create new cloth with image upload
+/**
+ * @swagger
+ * /clothes:
+ *   post:
+ *     summary: Create a new cloth item with image upload
+ *     tags: [Clothes]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - imageBase64
+ *               - color
+ *               - containerBagId
+ *             properties:
+ *               name:
+ *                 type: string
+ *               imageBase64:
+ *                 type: string
+ *                 description: Base64 string of the item image
+ *               color:
+ *                 type: string
+ *               owner:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               containerBagId:
+ *                 type: string
+ *               notes:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Cloth created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Cloth'
+ *       400:
+ *         description: Missing required fields
+ */
 router.post('/', async (req, res) => {
     try {
         const { name, imageBase64, color, owner, category, containerBagId, notes } = req.body;
@@ -168,7 +384,45 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Update cloth
+/**
+ * @swagger
+ * /clothes/{clothId}:
+ *   put:
+ *     summary: Update an existing cloth item
+ *     tags: [Clothes]
+ *     parameters:
+ *       - in: path
+ *         name: clothId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               color:
+ *                 type: string
+ *               owner:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               containerBagId:
+ *                 type: string
+ *               notes:
+ *                 type: string
+ *               favorite:
+ *                 type: boolean
+ *               imageBase64:
+ *                 type: string
+ *                 description: New Base64 image (optional)
+ *     responses:
+ *       200:
+ *         description: Cloth updated successfully
+ */
 router.put('/:clothId', async (req, res) => {
     try {
         const { name, color, owner, category, containerBagId, notes, favorite, imageBase64 } = req.body;
@@ -239,7 +493,29 @@ router.put('/:clothId', async (req, res) => {
     }
 });
 
-// Toggle favorite
+/**
+ * @swagger
+ * /clothes/{clothId}/favorite:
+ *   patch:
+ *     summary: Toggle favorite status of a cloth item
+ *     tags: [Clothes]
+ *     parameters:
+ *       - in: path
+ *         name: clothId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Favorite status toggled
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 favorite:
+ *                   type: boolean
+ */
 router.patch('/:clothId/favorite', async (req, res) => {
     try {
         const cloth = await Cloth.findOne({
@@ -261,7 +537,22 @@ router.patch('/:clothId/favorite', async (req, res) => {
     }
 });
 
-// Delete cloth
+/**
+ * @swagger
+ * /clothes/{clothId}:
+ *   delete:
+ *     summary: Delete a cloth item
+ *     tags: [Clothes]
+ *     parameters:
+ *       - in: path
+ *         name: clothId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Cloth deleted successfully
+ */
 router.delete('/:clothId', async (req, res) => {
     try {
         const cloth = await Cloth.findOne({
@@ -285,7 +576,25 @@ router.delete('/:clothId', async (req, res) => {
     }
 });
 
-// Get filter options (unique values)
+/**
+ * @swagger
+ * /clothes/filters/options:
+ *   get:
+ *     summary: Get unique values for filters (colors, owners, categories, bags)
+ *     tags: [Clothes]
+ *     responses:
+ *       200:
+ *         description: Filter options fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 colors: { type: array, items: { type: string } }
+ *                 owners: { type: array, items: { type: string } }
+ *                 categories: { type: array, items: { type: string } }
+ *                 bags: { type: array, items: { $ref: '#/components/schemas/Bag' } }
+ */
 router.get('/filters/options', async (req, res) => {
     try {
         const colors = await Cloth.distinct('color', { createdBy: req.userId });
