@@ -171,7 +171,7 @@ export const exportApi = {
         const user = getCurrentUser();
         if (!user) throw new Error('Not authenticated');
         const token = await user.getIdToken();
-        return `${API_BASE_URL}/api/export/barcodes?token=${token}&userId=${user.uid}`;
+        return `${API_BASE_URL}/export/barcodes?token=${token}&userId=${user.uid}`;
     },
 
     getBarcodesBase64: async (): Promise<string> => {
