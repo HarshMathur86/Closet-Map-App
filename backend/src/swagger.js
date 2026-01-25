@@ -12,6 +12,28 @@ const options = {
             {
                 url: "/api"
             }
+        ],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT",
+                    description: "Enter your Firebase ID Token (you can get this from the app logs or by printing 'user.getIdToken()' in code)"
+                },
+                userIdAuth: {
+                    type: "apiKey",
+                    in: "header",
+                    name: "x-user-id",
+                    description: "Enter your Firebase User UID"
+                }
+            }
+        },
+        security: [
+            {
+                bearerAuth: [],
+                userIdAuth: []
+            }
         ]
     },
     apis: [

@@ -9,14 +9,14 @@ const authMiddleware = require('../middleware/auth');
 router.use(authMiddleware);
 
 // Generate barcode image
-const generateBarcodeBuffer = async (text) => {
+const generateBarcodeBuffer = async (text, includeText = false) => {
     return new Promise((resolve, reject) => {
         bwipjs.toBuffer({
             bcid: 'code128',
             text: text,
             scale: 3,
             height: 10,
-            includetext: true,
+            includetext: includeText,
             textxalign: 'center',
         }, (err, png) => {
             if (err) reject(err);
@@ -70,47 +70,77 @@ router.get('/barcodes', async (req, res) => {
         doc.moveDown();
 
         // Generate barcodes for each bag
-        const barcodesPerRow = 2;
-        const barcodeWidth = 220;
-        const barcodeHeight = 120;
+        const barcodesPerRow = 3;
+        const barcodesPerCol = 3;
+        const barcodesPerPage = barcodesPerRow * barcodesPerCol;
+        const barcodeWidth = 150;
+        const barcodeHeight = 210; // Condensed height for 3x3 grid
         const margin = 50;
-        const spacing = 30;
+        const spacingX = 20;
+        const spacingY = 30;
 
         for (let i = 0; i < bags.length; i++) {
             const bag = bags[i];
 
             // Calculate position
             const col = i % barcodesPerRow;
-            const row = Math.floor((i % 4) / barcodesPerRow);
+            const row = Math.floor((i % barcodesPerPage) / barcodesPerRow);
 
-            const x = margin + col * (barcodeWidth + spacing);
-            const y = 120 + row * (barcodeHeight + 60);
+            const x = margin + col * (barcodeWidth + spacingX);
+            const y = 80 + row * (barcodeHeight + spacingY);
 
-            // Add new page if needed (4 barcodes per page)
-            if (i > 0 && i % 4 === 0) {
+            // Add new page if needed (9 barcodes per page)
+            if (i > 0 && i % barcodesPerPage === 0) {
                 doc.addPage();
             }
 
             try {
-                // Generate barcode image
-                const barcodeBuffer = await generateBarcodeBuffer(bag.barcodeValue);
+                // Generate barcode image (without internal text)
+                const barcodeBuffer = await generateBarcodeBuffer(bag.barcodeValue, false);
 
-                // Draw box
-                doc.rect(x - 10, y - 30, barcodeWidth + 20, barcodeHeight + 50)
+                // Draw bordered box
+                doc.rect(x, y, barcodeWidth, barcodeHeight)
+                    .lineWidth(1)
                     .stroke();
 
-                // Draw bag info
-                doc.fontSize(14)
-                    .text(`${bag.bagId}: ${bag.name}`, x, y - 20, {
+                let currentY = y + 20;
+
+                // 1. Bag ID (Big, Bold)
+                doc.font('Helvetica-Bold').fontSize(22)
+                    .text(bag.bagId, x, currentY, {
                         width: barcodeWidth,
                         align: 'center'
                     });
 
-                // Draw barcode
-                doc.image(barcodeBuffer, x + 10, y + 10, {
-                    width: barcodeWidth - 20,
-                    height: 60
+                currentY += 30;
+
+                // 2. Bag Name
+                doc.font('Helvetica').fontSize(12)
+                    .text(bag.name, x, currentY, {
+                        width: barcodeWidth,
+                        align: 'center',
+                        ellipsis: true
+                    });
+
+                currentY += 25;
+
+                // 3. Barcode Image
+                const barcodeImgWidth = barcodeWidth - 30;
+                const barcodeImgHeight = 60;
+                doc.image(barcodeBuffer, x + (barcodeWidth - barcodeImgWidth) / 2, currentY, {
+                    width: barcodeImgWidth,
+                    height: barcodeImgHeight
                 });
+
+                currentY += barcodeImgHeight + 10;
+
+                // 4. Alphanumeric Code (with space between barcode)
+                doc.font('Helvetica').fontSize(8)
+                    .text(bag.barcodeValue, x, currentY, {
+                        width: barcodeWidth,
+                        align: 'center',
+                        characterSpacing: 0.5
+                    });
 
             } catch (err) {
                 console.error(`Error generating barcode for ${bag.bagId}:`, err);
@@ -165,7 +195,7 @@ router.get('/barcode/:bagId', async (req, res) => {
             return res.status(404).json({ error: 'Bag not found' });
         }
 
-        const barcodeBuffer = await generateBarcodeBuffer(bag.barcodeValue);
+        const barcodeBuffer = await generateBarcodeBuffer(bag.barcodeValue, true);
 
         res.setHeader('Content-Type', 'image/png');
         res.send(barcodeBuffer);
