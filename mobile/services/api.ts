@@ -17,6 +17,13 @@ api.interceptors.request.use(
         const user = getCurrentUser();
         if (user) {
             const token = await user.getIdToken();
+
+            // Add these lines temporarily:
+            // console.log('--- SWAGGER AUTH INFO ---');
+            // console.log('User UID (x-user-id):', user.uid);
+            // console.log('ID Token (bearerAuth):', token);
+            // console.log('-------------------------');
+
             config.headers.Authorization = `Bearer ${token}`;
             config.headers['X-User-Id'] = user.uid;
         }

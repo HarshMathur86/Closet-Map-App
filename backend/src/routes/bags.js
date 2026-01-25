@@ -54,8 +54,6 @@ router.use(authMiddleware);
  *   get:
  *     summary: Get all bags for the authenticated user
  *     tags: [Bags]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: List of bags fetched successfully
