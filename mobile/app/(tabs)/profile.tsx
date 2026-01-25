@@ -99,7 +99,7 @@ export default function ProfileScreen() {
                 <View style={[styles.card, { backgroundColor: colors.surface }]}>
                     <View style={styles.infoRow}>
                         <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Version</Text>
-                        <Text style={[styles.infoValue, { color: colors.text }]}>1.0.1</Text>
+                        <Text style={[styles.infoValue, { color: colors.text }]}>1.1.0</Text>
                     </View>
                 </View>
             </View>
