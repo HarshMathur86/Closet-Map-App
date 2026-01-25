@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { Buffer } from 'buffer';
 import { API_BASE_URL } from '../constants/Config';
 import { getCurrentUser } from './firebase';
 
@@ -170,8 +171,15 @@ export const exportApi = {
         const user = getCurrentUser();
         if (!user) throw new Error('Not authenticated');
         const token = await user.getIdToken();
-        return `${API_BASE_URL}/export/barcodes?token=${token}&userId=${user.uid}`;
+        return `${API_BASE_URL}/api/export/barcodes?token=${token}&userId=${user.uid}`;
     },
+
+    getBarcodesBase64: async (): Promise<string> => {
+        const { data } = await api.get<ArrayBuffer>('/export/barcodes', {
+            responseType: 'arraybuffer'
+        });
+        return Buffer.from(data).toString('base64');
+    }
 };
 
 export default api;
