@@ -9,6 +9,7 @@ import {
     Linking,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { Spacing, FontSize, BorderRadius } from '../../constants/Colors';
@@ -99,7 +100,9 @@ export default function ProfileScreen() {
                 <View style={[styles.card, { backgroundColor: colors.surface }]}>
                     <View style={styles.infoRow}>
                         <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Version</Text>
-                        <Text style={[styles.infoValue, { color: colors.text }]}>1.1.0</Text>
+                        <Text style={[styles.infoValue, { color: colors.text }]}>
+                            {Constants.expoConfig?.version ? `${Constants.expoConfig.version}` : '1.0.0'}
+                        </Text>
                     </View>
                 </View>
             </View>

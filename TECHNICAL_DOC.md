@@ -186,4 +186,23 @@ The mobile app cannot reach the backend on `localhost`.
 1. Find your computer's IP: `ipconfig getifaddr en0`.
 2. Update `mobile/constants/Config.ts` with the new IP.
 3. Restart backend: `npm run dev`.
-4. Reload mobile app.
+
+
+### "Code changes not reflecting (Stale Build)"
+If your latest code changes are not showing up on the device even after a reload, you need to perform a "Deep Clean".
+
+**Steps to Deep Clean:**
+1. **Stop the current Metro server** (Ctrl+C in the terminal).
+2. **Delete temporary directories**:
+   ```bash
+   cd mobile
+   rm -rf .expo node_modules/.cache/metro
+   ```
+3. **Clear Metro Cache and start**:
+   ```bash
+   npx expo start -c
+   ```
+4. **On your Physical Device / Emulator**:
+   - Force close the **Expo Go** app.
+   - Clear the app's cache in Android Settings (**Settings > Apps > Expo Go > Storage > Clear Cache**).
+   - Re-open Expo Go and scan the QR code.

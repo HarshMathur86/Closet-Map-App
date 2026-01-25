@@ -99,10 +99,7 @@ export const ClothModal: React.FC<ClothModalProps> = ({
                         <View style={styles.attributes}>
                             <View style={[styles.attribute, { backgroundColor: colors.surfaceVariant }]}>
                                 <Text style={[styles.attrLabel, { color: colors.textSecondary }]}>Color</Text>
-                                <View style={styles.colorRow}>
-                                    <View style={[styles.colorDot, { backgroundColor: cloth.color }]} />
-                                    <Text style={[styles.attrValue, { color: colors.text }]}>{cloth.color}</Text>
-                                </View>
+                                <View style={[styles.colorDot, { backgroundColor: cloth.color, borderColor: colors.border }]} />
                             </View>
 
                             {cloth.category && (
@@ -214,14 +211,15 @@ const styles = StyleSheet.create({
     },
     attributes: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
         gap: Spacing.sm,
         marginBottom: Spacing.lg,
     },
     attribute: {
+        flex: 1,
         padding: Spacing.md,
         borderRadius: BorderRadius.md,
-        minWidth: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     attrLabel: {
         fontSize: FontSize.xs,
@@ -231,15 +229,11 @@ const styles = StyleSheet.create({
         fontSize: FontSize.md,
         fontWeight: '600',
     },
-    colorRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
     colorDot: {
-        width: 16,
-        height: 16,
-        borderRadius: 8,
-        marginRight: Spacing.sm,
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        borderWidth: 1,
     },
     notesContainer: {
         padding: Spacing.md,

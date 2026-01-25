@@ -6,7 +6,7 @@ const options = {
         openapi: "3.0.0",
         info: {
             title: "Closet Map API",
-            version: "1.0.0"
+            version: process.env.npm_package_version
         },
         servers: [
             {
