@@ -15,8 +15,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as FileSystem from 'expo-file-system/legacy';
+import * as Sharing from 'expo-sharing';
 import { useTheme } from '../../context/ThemeContext';
-import { bagApi, Bag } from '../../services/api';
+import { bagApi, exportApi, Bag } from '../../services/api';
 import { BagCard } from '../../components/BagCard';
 import { Spacing, FontSize, BorderRadius } from '../../constants/Colors';
 
@@ -27,6 +29,7 @@ export default function BagsScreen() {
     const [editModalVisible, setEditModalVisible] = useState(false);
     const [selectedBag, setSelectedBag] = useState<Bag | null>(null);
     const [editName, setEditName] = useState('');
+    const [exporting, setExporting] = useState(false);
 
     const { colors } = useTheme();
     const router = useRouter();
@@ -110,6 +113,41 @@ export default function BagsScreen() {
         );
     };
 
+    const handleExportBarcodes = async () => {
+        try {
+            setExporting(true);
+
+            // Get authenticated PDF as Base64 (keeps token in headers)
+            const base64Data = await exportApi.getBarcodesBase64();
+
+            // Define local file path
+            const filename = 'bag-barcodes.pdf';
+            const fileUri = ((FileSystem as any).cacheDirectory || '') + filename;
+
+            // Write the Base64 string to a file
+            await FileSystem.writeAsStringAsync(fileUri, base64Data, {
+                encoding: (FileSystem as any).EncodingType ? (FileSystem as any).EncodingType.Base64 : 'base64'
+            });
+
+            // Share the file
+            if (await Sharing.isAvailableAsync()) {
+                await Sharing.shareAsync(fileUri, {
+                    mimeType: 'application/pdf',
+                    dialogTitle: 'Export Bag Barcodes',
+                    UTI: 'com.adobe.pdf'
+                });
+            } else {
+                Alert.alert('Error', 'Sharing is not available on this device');
+            }
+        } catch (error) {
+            console.error('Error exporting barcodes:', error);
+            Alert.alert('Export Failed', 'Unable to generate or download the barcode PDF. Please try again.');
+        } finally {
+            setExporting(false);
+        }
+    };
+
+
     const renderBagCard = ({ item }: { item: Bag }) => (
         <BagCard
             bag={item}
@@ -140,10 +178,17 @@ export default function BagsScreen() {
 
                 <TouchableOpacity
                     style={[styles.exportButton, { backgroundColor: colors.surfaceVariant }]}
-                    onPress={() => Alert.alert('Export', 'Opening barcode PDF...')}
+                    onPress={handleExportBarcodes}
+                    disabled={exporting}
                 >
-                    <Ionicons name="download-outline" size={20} color={colors.primary} />
-                    <Text style={[styles.exportButtonText, { color: colors.primary }]}>Export Barcodes</Text>
+                    {exporting ? (
+                        <ActivityIndicator size="small" color={colors.primary} />
+                    ) : (
+                        <Ionicons name="download-outline" size={20} color={colors.primary} />
+                    )}
+                    <Text style={[styles.exportButtonText, { color: colors.primary }]}>
+                        {exporting ? 'Exporting...' : 'Export Barcodes'}
+                    </Text>
                 </TouchableOpacity>
             </View>
 

@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { Buffer } from 'buffer';
 import { API_BASE_URL } from '../constants/Config';
 import { getCurrentUser } from './firebase';
 
@@ -17,6 +18,13 @@ api.interceptors.request.use(
         const user = getCurrentUser();
         if (user) {
             const token = await user.getIdToken();
+
+            // Add these lines temporarily:
+            // console.log('--- SWAGGER AUTH INFO ---');
+            // console.log('User UID (x-user-id):', user.uid);
+            // console.log('ID Token (bearerAuth):', token);
+            // console.log('-------------------------');
+
             config.headers.Authorization = `Bearer ${token}`;
             config.headers['X-User-Id'] = user.uid;
         }
@@ -165,6 +173,13 @@ export const exportApi = {
         const token = await user.getIdToken();
         return `${API_BASE_URL}/export/barcodes?token=${token}&userId=${user.uid}`;
     },
+
+    getBarcodesBase64: async (): Promise<string> => {
+        const { data } = await api.get<ArrayBuffer>('/export/barcodes', {
+            responseType: 'arraybuffer'
+        });
+        return Buffer.from(data).toString('base64');
+    }
 };
 
 export default api;

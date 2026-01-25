@@ -9,6 +9,7 @@ import {
     Linking,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { Spacing, FontSize, BorderRadius } from '../../constants/Colors';
@@ -50,8 +51,10 @@ export default function ProfileScreen() {
                         {user?.email?.charAt(0).toUpperCase() || 'U'}
                     </Text>
                 </View>
-                <Text style={[styles.email, { color: colors.text }]}>{user?.email}</Text>
-                <Text style={[styles.userId, { color: colors.textMuted }]}>ID: {user?.uid.substring(0, 8)}...</Text>
+                <View style={styles.userInfoText}>
+                    <Text style={[styles.email, { color: colors.text }]}>{user?.email}</Text>
+                    <Text style={[styles.userId, { color: colors.textMuted }]}>ID: {user?.uid.substring(0, 8)}...</Text>
+                </View>
             </View>
 
             {/* Theme Settings */}
@@ -73,7 +76,7 @@ export default function ProfileScreen() {
                             <View style={styles.themeOptionLeft}>
                                 <Ionicons
                                     name={option.icon as any}
-                                    size={22}
+                                    size={20}
                                     color={theme === option.value ? colors.primary : colors.textSecondary}
                                 />
                                 <Text style={[
@@ -84,7 +87,9 @@ export default function ProfileScreen() {
                                 </Text>
                             </View>
                             {theme === option.value && (
-                                <Ionicons name="checkmark" size={22} color={colors.primary} />
+                                <View style={[styles.activePill, { backgroundColor: colors.primary }]}>
+                                    <Text style={styles.activePillText}>Active</Text>
+                                </View>
                             )}
                         </TouchableOpacity>
                     ))}
@@ -99,31 +104,35 @@ export default function ProfileScreen() {
                 <View style={[styles.card, { backgroundColor: colors.surface }]}>
                     <View style={styles.infoRow}>
                         <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Version</Text>
-                        <Text style={[styles.infoValue, { color: colors.text }]}>1.0.1</Text>
+                        <Text style={[styles.infoValue, { color: colors.text }]}>
+                            {Constants.expoConfig?.version ? `${Constants.expoConfig.version}` : '1.0.0'} (Beta)
+                        </Text>
                     </View>
                 </View>
             </View>
 
-            {/* Logout */}
-            <TouchableOpacity
-                style={[styles.logoutButton, { backgroundColor: colors.surface }]}
-                onPress={handleLogout}
-            >
-                <Ionicons name="log-out-outline" size={22} color={colors.error} />
-                <Text style={[styles.logoutText, { color: colors.error }]}>Logout</Text>
-            </TouchableOpacity>
+            {/* Log Out Section */}
+            <View style={styles.section}>
+                <TouchableOpacity
+                    style={[styles.logoutButton, { backgroundColor: `${colors.error}15` }]}
+                    onPress={handleLogout}
+                >
+                    <Ionicons name="log-out-outline" size={20} color={colors.error} />
+                    <Text style={[styles.logoutText, { color: colors.error }]}>Log Out</Text>
+                </TouchableOpacity>
+            </View>
 
             {/* Footer */}
             <TouchableOpacity
                 onPress={() => Linking.openURL('https://github.com/HarshMathur86')}
                 style={styles.madeByContainer}
             >
-                <Text style={[styles.madeByText, { color: colors.textSecondary }]}>
-                    Made with ❤️ by <Text style={[styles.link, { color: colors.primary }]}>HarshMathur86</Text>
+                <Text style={[styles.madeByText, { color: colors.textSecondary, opacity: 1 }]}>
+                    Made with <Ionicons name="heart" size={12} color={`${colors.primary}80`} /> by HarshMathur86
                 </Text>
             </TouchableOpacity>
 
-            <Text style={[styles.footer, { color: colors.textMuted }]}>
+            <Text style={[styles.footer, { color: colors.textSecondary }]}>
                 ClosetMap © 2026
             </Text>
         </ScrollView>
@@ -140,7 +149,10 @@ const styles = StyleSheet.create({
     },
     card: {
         borderRadius: BorderRadius.lg,
-        padding: Spacing.lg,
+        padding: Spacing.md,
+        alignItems: 'center',
+    },
+    userInfoText: {
         alignItems: 'center',
     },
     avatar: {
@@ -179,6 +191,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingVertical: Spacing.md,
+        paddingRight: Spacing.md,
         width: '100%',
     },
     themeOptionBorder: {
@@ -207,14 +220,25 @@ const styles = StyleSheet.create({
         fontSize: FontSize.md,
         fontWeight: '500',
     },
+    activePill: {
+        paddingHorizontal: Spacing.sm,
+        paddingVertical: 2,
+        borderRadius: Spacing.xs,
+    },
+    activePillText: {
+        color: 'white',
+        fontSize: 10,
+        fontWeight: '800',
+        textTransform: 'uppercase',
+    },
     logoutButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: Spacing.xl,
-        padding: Spacing.lg,
+        padding: Spacing.md,
         borderRadius: BorderRadius.lg,
         gap: Spacing.sm,
+        width: '100%',
     },
     logoutText: {
         fontSize: FontSize.md,
@@ -223,16 +247,17 @@ const styles = StyleSheet.create({
     footer: {
         textAlign: 'center',
         marginTop: Spacing.md,
-        fontSize: FontSize.xs,
-        opacity: 0.7,
+        fontSize: 10,
+        opacity: 0.5,
     },
     madeByContainer: {
         marginTop: Spacing.xxl,
         alignItems: 'center',
     },
     madeByText: {
-        fontSize: FontSize.sm,
+        fontSize: 11,
         fontWeight: '500',
+        opacity: 0.6,
     },
     link: {
         fontWeight: '700',

@@ -8,6 +8,7 @@ import {
     KeyboardAvoidingView,
     Platform,
     Alert,
+    Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, useRouter } from 'expo-router';
@@ -51,13 +52,14 @@ export default function LoginScreen() {
             >
                 {/* Header */}
                 <View style={styles.header}>
-                    <LinearGradient
-                        colors={[colors.primary, colors.primaryDark]}
-                        style={styles.logoContainer}
-                    >
-                        <Ionicons name="shirt" size={48} color="white" />
-                    </LinearGradient>
-                    <Text style={[styles.title, { color: colors.text }]}>ClosetMap</Text>
+                    <View style={styles.logoContainer}>
+                        <Image
+                            source={require('../../assets/icon.png')}
+                            style={styles.logoImage}
+                            resizeMode="contain"
+                        />
+                    </View>
+                    <Text style={[styles.title, { color: colors.text }]}>Closet Map</Text>
                     <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
                         Track your clothes, find them anywhere
                     </Text>
@@ -165,12 +167,15 @@ const styles = StyleSheet.create({
         marginBottom: Spacing.xxl,
     },
     logoContainer: {
-        width: 100,
-        height: 100,
-        borderRadius: 28,
+        width: 120,
+        height: 120,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: Spacing.lg,
+    },
+    logoImage: {
+        width: 170,
+        height: 170,
     },
     title: {
         fontSize: FontSize.xxxl,
