@@ -1,4 +1,8 @@
-# ClosetMap - Cloths Inventory App
+<div align="center">
+  <img src="./mobile/assets/icon.png" width="128" height="128" alt="ClosetMap Icon">
+  <h1>ClosetMap - The Wardrobe App</h1>
+</div>
+
 
 ClosetMap is a comprehensive mobile application designed to help you organize and track your wardrobe. It allows you to digitize your closet, manage clothes, and find items quickly.
 
@@ -20,6 +24,7 @@ We are excited to announce the release of version 1.2.0. This release introduces
 
 - **Color Palette:** The color selection palette is functional but limited. We are planning to expand the color options while ensuring the UI remains user-friendly.
 - **Category Classification:** The current category options are broad. We are working on a more discrete and granular classification system to help you organize better.
+- **Login Error:** The login functionality is currently experiencing issues after 60 min of login. We are working on a fix to resolve this.
 
 ## Getting Started
 
