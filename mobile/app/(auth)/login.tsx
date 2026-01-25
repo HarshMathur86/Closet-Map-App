@@ -174,8 +174,8 @@ const styles = StyleSheet.create({
         marginBottom: Spacing.lg,
     },
     logoImage: {
-        width: 160,
-        height: 160,
+        width: 170,
+        height: 170,
     },
     title: {
         fontSize: FontSize.xxxl,
