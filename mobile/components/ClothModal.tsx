@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Modal,
     View,
@@ -8,12 +8,15 @@ import {
     Image,
     ScrollView,
     Dimensions,
+    Alert,
+    ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
-import { Cloth } from '../services/api';
+import { Cloth, clothApi } from '../services/api';
 import { BorderRadius, Spacing, FontSize } from '../constants/Colors';
+import { BagSelectionModal } from './BagSelectionModal';
 
 interface ClothModalProps {
     cloth: Cloth | null;
@@ -22,7 +25,7 @@ interface ClothModalProps {
     onEdit?: () => void;
     onDelete?: () => void;
     onFavoriteToggle?: () => void;
-    onMoveToBag?: () => void;
+    onMoveToBag?: (newBagId: string, newBagName: string) => void;
 }
 
 const { width, height } = Dimensions.get('window');
@@ -37,8 +40,34 @@ export const ClothModal: React.FC<ClothModalProps> = ({
     onMoveToBag,
 }) => {
     const { colors } = useTheme();
+    const [bagSelectionVisible, setBagSelectionVisible] = useState(false);
+    const [isMoving, setIsMoving] = useState(false);
 
     if (!cloth) return null;
+
+    const handleBagPress = () => {
+        setBagSelectionVisible(true);
+    };
+
+    const handleSelectBag = async (newBagId: string, newBagName: string) => {
+        setBagSelectionVisible(false);
+        setIsMoving(true);
+
+        try {
+            await clothApi.update(cloth.clothId, { containerBagId: newBagId });
+            Alert.alert(
+                'Success',
+                `"${cloth.name}" moved to "${newBagName}"`,
+                [{ text: 'OK' }]
+            );
+            onMoveToBag?.(newBagId, newBagName);
+        } catch (error) {
+            console.error('Error moving cloth:', error);
+            Alert.alert('Error', 'Failed to move cloth. Please try again.');
+        } finally {
+            setIsMoving(false);
+        }
+    };
 
     return (
         <Modal
@@ -61,11 +90,13 @@ export const ClothModal: React.FC<ClothModalProps> = ({
                                 color={cloth.favorite ? colors.favorite : colors.text}
                             />
                         </TouchableOpacity>
+                        {/* TODO: Edit feature - uncomment when implemented
                         {onEdit && (
                             <TouchableOpacity onPress={onEdit} style={styles.actionButton}>
                                 <Ionicons name="create-outline" size={24} color={colors.text} />
                             </TouchableOpacity>
                         )}
+                        */}
                     </View>
                 </View>
 
@@ -86,9 +117,14 @@ export const ClothModal: React.FC<ClothModalProps> = ({
                         {/* Bag Info */}
                         <TouchableOpacity
                             style={[styles.bagInfo, { backgroundColor: colors.surfaceVariant }]}
-                            onPress={onMoveToBag}
+                            onPress={handleBagPress}
+                            disabled={isMoving}
                         >
-                            <Ionicons name="bag" size={20} color={colors.primary} />
+                            {isMoving ? (
+                                <ActivityIndicator size="small" color={colors.primary} />
+                            ) : (
+                                <Ionicons name="bag" size={20} color={colors.primary} />
+                            )}
                             <Text style={[styles.bagName, { color: colors.text }]}>
                                 {cloth.bagName || cloth.containerBagId}
                             </Text>
@@ -150,9 +186,18 @@ export const ClothModal: React.FC<ClothModalProps> = ({
                     </View>
                 )}
             </SafeAreaView>
+
+            {/* Bag Selection Modal */}
+            <BagSelectionModal
+                visible={bagSelectionVisible}
+                currentBagId={cloth.containerBagId}
+                onClose={() => setBagSelectionVisible(false)}
+                onSelectBag={handleSelectBag}
+            />
         </Modal>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {

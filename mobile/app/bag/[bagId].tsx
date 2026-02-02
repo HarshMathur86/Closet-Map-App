@@ -150,6 +150,21 @@ export default function BagContentsScreen() {
                     setSelectedCloth(null);
                 }}
                 onFavoriteToggle={() => selectedCloth && handleFavoriteToggle(selectedCloth.clothId)}
+                onDelete={() => {
+                    if (selectedCloth) {
+                        clothApi.delete(selectedCloth.clothId).then(() => {
+                            setClothes(prev => prev.filter(c => c.clothId !== selectedCloth.clothId));
+                            setModalVisible(false);
+                            setSelectedCloth(null);
+                        });
+                    }
+                }}
+                onMoveToBag={() => {
+                    // Refresh bag contents and close modal after moving
+                    fetchData();
+                    setModalVisible(false);
+                    setSelectedCloth(null);
+                }}
             />
         </View>
     );
