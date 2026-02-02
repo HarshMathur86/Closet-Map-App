@@ -19,7 +19,10 @@ interface BagCardProps {
 }
 
 const { width } = Dimensions.get('window');
-const CARD_WIDTH = (width - Spacing.lg * 3) / 2;
+// Card dimensions - gap matches vertical spacing (md)
+const CARD_MARGIN = Spacing.md;
+const GAP = Spacing.md; // Same as vertical margin
+const CARD_WIDTH = (width - CARD_MARGIN * 2 - GAP) / 2;
 
 // Gradient colors for bags
 const GRADIENTS = [
@@ -88,7 +91,8 @@ export const BagCard: React.FC<BagCardProps> = ({ bag, onPress, onEdit }) => {
 
 const styles = StyleSheet.create({
     card: {
-        width: CARD_WIDTH,
+        flex: 1,
+        maxWidth: CARD_WIDTH,
         height: CARD_WIDTH * 1.2,
         borderRadius: BorderRadius.lg,
         marginBottom: Spacing.md,
