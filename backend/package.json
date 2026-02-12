@@ -1,6 +1,6 @@
 {
   "name": "closetmap-backend",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "Backend for Clothes Inventory & Bag Tracking App",
   "main": "server.js",
   "scripts": {
@@ -24,5 +24,8 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
+  },
+  "overrides": {
+    "fast-xml-parser": "5.3.4"
   }
 }

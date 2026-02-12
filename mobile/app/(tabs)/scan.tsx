@@ -163,6 +163,17 @@ export default function ScanScreen() {
                         setSelectedCloth(null);
                     }}
                     onFavoriteToggle={() => selectedCloth && handleFavoriteToggle(selectedCloth.clothId)}
+                    onMoveToBag={() => {
+                        // Update scan results by removing the moved cloth
+                        if (selectedCloth && scanResult) {
+                            setScanResult({
+                                ...scanResult,
+                                clothes: scanResult.clothes.filter(c => c.clothId !== selectedCloth.clothId),
+                            });
+                        }
+                        setModalVisible(false);
+                        setSelectedCloth(null);
+                    }}
                 />
             </View>
         );

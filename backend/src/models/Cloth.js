@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const clothSchema = new mongoose.Schema({
     clothId: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     name: {
         type: String,
@@ -62,7 +61,8 @@ const clothSchema = new mongoose.Schema({
     }
 });
 
-// Indexes for faster queries
+// Indexes for faster queries and per-user uniqueness
+clothSchema.index({ createdBy: 1, clothId: 1 }, { unique: true });
 clothSchema.index({ createdBy: 1, containerBagId: 1 });
 clothSchema.index({ createdBy: 1, favorite: 1 });
 clothSchema.index({ createdBy: 1, name: 'text' });

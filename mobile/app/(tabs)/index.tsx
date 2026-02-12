@@ -216,6 +216,12 @@ export default function HomeScreen() {
                 onEdit={() => {
                     // TODO: Navigate to edit screen
                 }}
+                onMoveToBag={() => {
+                    // Refresh clothes list and close modal after moving
+                    fetchClothes();
+                    setModalVisible(false);
+                    setSelectedCloth(null);
+                }}
             />
         </View>
     );
@@ -259,6 +265,7 @@ const styles = StyleSheet.create({
     row: {
         justifyContent: 'space-between',
         paddingHorizontal: Spacing.md,
+        gap: Spacing.sm,
     },
     listContent: {
         paddingTop: Spacing.md,
