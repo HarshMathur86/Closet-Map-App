@@ -18,9 +18,10 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Swagger
+// Swagger - expose in dev mode (works on both local and Render)
 if (process.env.NODE_ENV === "dev") {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  console.log("📚 Swagger UI enabled");
 }
 
 // Cloudinary configuration
@@ -57,6 +58,12 @@ app.use('/api/export', exportRoutes);
  *                 status: { type: string }
  *                 timestamp: { type: string, format: date-time }
  */
+// Root health endpoint for cloud platform health checks (e.g., Render)
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// API health endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
@@ -68,10 +75,17 @@ app.use((err, req, res, next) => {
 });
 
 //const PORT = process.env.PORT || 5000;
-const PORT = process.env.PORT;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+const PORT = process.env.PORT || 10000;
+// Bind to 0.0.0.0 on Render/cloud platforms, localhost for local dev
+// Render sets RENDER environment variable automatically
+const HOST = process.env.RENDER ? '0.0.0.0' : 'localhost';
+
+app.listen(PORT, HOST, () => {
+  console.log(`🚀 Server running on ${HOST}:${PORT}`);
   if (process.env.NODE_ENV === "dev") {
-    console.log(`Swagger UI available at http://localhost:${PORT}/api-docs`);
+    const swaggerUrl = process.env.RENDER
+      ? `https://${process.env.RENDER_EXTERNAL_HOSTNAME}/api-docs`
+      : `http://localhost:${PORT}/api-docs`;
+    console.log(`📚 Swagger UI available at ${swaggerUrl}`);
   }
 });
