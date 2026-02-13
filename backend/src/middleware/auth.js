@@ -48,10 +48,10 @@ const authMiddleware = async (req, res, next) => {
         // req.userId = userId;
 
         //Production verification
-        console.log("Token: " + token)
+        // console.log("Token: " + token)
         const decodedToken = await admin.auth().verifyIdToken(token);
         req.userId = decodedToken.uid;
-        console.log("Decoded token:", decodedToken);
+        // console.log("Decoded token:", decodedToken);
 
 
         next();
