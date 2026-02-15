@@ -25,7 +25,8 @@
       "package": "com.closetmap.clothsinentory",
       "edgeToEdgeEnabled": true,
       "permissions": [
-        "android.permission.CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -50,6 +51,14 @@
           "photosPermission": "Allow ClosetMap to access your photos to add cloth images"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {
+        "root": "./app"
+      },
+      "eas": {
+        "projectId": "5e2ce91b-1e86-4023-8761-e296bd16cf12"
+      }
+    }
   }
 }
