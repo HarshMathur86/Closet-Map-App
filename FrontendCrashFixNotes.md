@@ -66,6 +66,8 @@ export ANDROID_HOME="$HOME/Library/Android/sdk"
 Compile the native Android code and install it onto your running emulator:
 ```bash
 npx expo run:android
+or
+npm run android
 ```
 
 *(Note: If you run this often, you can add the two `export` lines to your `~/.zshrc` file. This will make them permanent for all future terminal windows.)*
