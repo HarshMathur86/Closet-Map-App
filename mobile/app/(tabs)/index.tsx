@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { clothApi, Cloth } from '../../services/api';
 import { ClothCard } from '../../components/ClothCard';
@@ -30,9 +31,12 @@ export default function HomeScreen() {
     const [modalVisible, setModalVisible] = useState(false);
 
     const { colors } = useTheme();
+    const { user } = useAuth();
     const router = useRouter();
 
     const fetchClothes = async () => {
+        if (!user) return; // Don't fetch if not authenticated
+
         try {
             const data = await clothApi.getAll({
                 sortBy,
