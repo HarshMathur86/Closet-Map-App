@@ -50,7 +50,8 @@
         {
           "photosPermission": "Allow ClosetMap to access your photos to add cloth images"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "extra": {
       "router": {
