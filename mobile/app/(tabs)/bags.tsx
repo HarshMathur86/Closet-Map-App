@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
+import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import { bagApi, exportApi, Bag } from '../../services/api';
 import { BagCard } from '../../components/BagCard';
@@ -32,9 +33,12 @@ export default function BagsScreen() {
     const [exporting, setExporting] = useState(false);
 
     const { colors } = useTheme();
+    const { user } = useAuth();
     const router = useRouter();
 
     const fetchBags = async () => {
+        if (!user) return; // Don't fetch if not authenticated
+
         try {
             const data = await bagApi.getAll();
             setBags(data);

@@ -15,17 +15,18 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.closetmap.clothsinentory"
+      "bundleIdentifier": "com.harshmathur86.closetmap.clothsinventory"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#6366F1"
       },
-      "package": "com.closetmap.clothsinentory",
+      "package": "com.harshmathur86.closetmap.clothsinventory",
       "edgeToEdgeEnabled": true,
       "permissions": [
-        "android.permission.CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -49,7 +50,16 @@
         {
           "photosPermission": "Allow ClosetMap to access your photos to add cloth images"
         }
-      ]
-    ]
+      ],
+      "expo-font"
+    ],
+    "extra": {
+      "router": {
+        "root": "./app"
+      },
+      "eas": {
+        "projectId": "5e2ce91b-1e86-4023-8761-e296bd16cf12"
+      }
+    }
   }
 }
