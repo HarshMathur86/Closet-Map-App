@@ -78,7 +78,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 10000;
 // Bind to 0.0.0.0 on Render/cloud platforms, localhost for local dev
 // Render sets RENDER environment variable automatically
-const HOST = process.env.RENDER ? '0.0.0.0' : 'localhost';
+const HOST = '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
   console.log(`🚀 Server running on ${HOST}:${PORT}`);
