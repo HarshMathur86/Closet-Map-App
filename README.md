@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./mobile/assets/icon.png" width="128" height="128" alt="ClosetMap Icon">
+  <img src="./mobile/assets/adaptive-icon.png" width="128" height="128" alt="ClosetMap Icon">
   <h1>ClosetMap - The Wardrobe App</h1>
 </div>
 
