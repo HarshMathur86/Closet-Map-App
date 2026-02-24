@@ -1,0 +1,19 @@
+version: "1.4.2"
+projects:
+- name: Closet Map App
+  environments:
+  - name: Development
+    services:
+    - type: web
+      name: Closet-Map-App-Backend-dev
+      runtime: node
+      repo: https://github.com/HarshMathur86/Closet-Map-App
+      plan: free
+      envVars:
+      - fromGroup: Development
+      region: virginia
+      buildCommand: npm install
+      startCommand: npm start
+      healthCheckPath: /health
+      autoDeployTrigger: commit
+      rootDir: backend
