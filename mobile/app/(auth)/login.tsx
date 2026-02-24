@@ -54,12 +54,12 @@ export default function LoginScreen() {
                 <View style={styles.header}>
                     <View style={styles.logoContainer}>
                         <Image
-                            source={require('../../assets/icon.png')}
+                            source={require('../../assets/adaptive-icon.png')}
                             style={styles.logoImage}
                             resizeMode="contain"
                         />
                     </View>
-                    <Text style={[styles.title, { color: colors.text }]}>Closet Map</Text>
+                    {/* <Text style={[styles.title, { color: colors.text }]}>Closet Map</Text> */}
                     <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
                         Track your clothes, find them anywhere
                     </Text>
@@ -168,14 +168,14 @@ const styles = StyleSheet.create({
     },
     logoContainer: {
         width: 120,
-        height: 120,
+        height: 100,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: Spacing.lg,
     },
     logoImage: {
-        width: 170,
-        height: 170,
+        width: 240,
+        height: 240,
     },
     title: {
         fontSize: FontSize.xxxl,

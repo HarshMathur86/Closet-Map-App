@@ -8,9 +8,9 @@ node_modules/
 
 # Firebase Service Account Keys (SENSITIVE - DO NOT COMMIT)
 **/config/ServiceAccountKey.json
-**/config/serviceAccountKey.json
+**/config/serviceAccountKeyPROD.json
 src/config/ServiceAccountKey.json
-src/config/serviceAccountKey.json
+src/config/serviceAccountKeyPROD.json
 config/*.json
 
 # Logs
