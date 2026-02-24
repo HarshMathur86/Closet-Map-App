@@ -12,12 +12,12 @@ ClosetMap is a comprehensive mobile application designed to help you organize an
 
 ## Version Information
 
-**Current Release:** v1.4.0
-**Release Date:** 2026-02-22
+**Current Release:** v1.4.1
+**Release Date:** 2026-02-24
 
 ### Release Notes
 
-We are excited to announce the release of version 1.4.0. This release introduces significant improvements and bug fixes.
+We are excited to announce the release of version 1.4.1. This release introduces significant improvements and bug fixes.
 
 - **Move Items Between Bags Fixed:** Users can now seamlessly move clothes from one bag to another.
 - **Color Selection Palette:** Improved the color selection interface for better usability.

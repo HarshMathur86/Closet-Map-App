@@ -28,6 +28,6 @@ export const FIREBASE_CONFIG = {
 // App Info
 export const APP_INFO = {
     name: 'ClosetMap',
-    version: '1.4.0',
+    version: '1.4.1',
     bundleId: 'com.closetmap.clothsinentory'
 };
