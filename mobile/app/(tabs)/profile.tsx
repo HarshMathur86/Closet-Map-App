@@ -105,7 +105,7 @@ export default function ProfileScreen() {
                     <View style={styles.infoRow}>
                         <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Version</Text>
                         <Text style={[styles.infoValue, { color: colors.text }]}>
-                            {Constants.expoConfig?.version ? `${Constants.expoConfig.version}` : '1.0.0'} (Beta)
+                            {Constants.expoConfig?.version ? `${Constants.expoConfig.version}` : '1.0.0'} (DEV)
                         </Text>
                     </View>
                 </View>
