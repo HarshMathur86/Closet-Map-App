@@ -8,7 +8,7 @@ import {
     Alert,
     ActivityIndicator,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -22,6 +22,7 @@ export default function AddBagScreen() {
 
     const { colors } = useTheme();
     const router = useRouter();
+    const insets = useSafeAreaInsets();
 
     const handleSubmit = async () => {
         if (!name.trim()) {
@@ -81,7 +82,10 @@ export default function AddBagScreen() {
             </View>
 
             {/* Submit Button */}
-            <View style={[styles.footer, { backgroundColor: colors.background }]}>
+            <View style={[
+                styles.footer,
+                { backgroundColor: colors.background, paddingBottom: Math.max(insets.bottom, 24) }
+            ]}>
                 <TouchableOpacity
                     style={[styles.submitButton, { opacity: loading ? 0.7 : 1 }]}
                     onPress={handleSubmit}
