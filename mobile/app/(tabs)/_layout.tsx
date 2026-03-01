@@ -48,7 +48,7 @@ export default function TabLayout() {
                     title: 'Clothes',
                     tabBarIcon: ({ color, size, focused }) => (
                         <View style={focused ? styles.activeIconContainer : null}>
-                            <Ionicons name="shirt" size={focused ? size + 2 : size - 1} color={color} />
+                            <Ionicons name="shirt" size={focused ? size : size - 4} color={color} />
                         </View>
                     ),
                     headerTitle: 'My Wardrobe',
@@ -60,7 +60,7 @@ export default function TabLayout() {
                     title: 'Bags',
                     tabBarIcon: ({ color, size, focused }) => (
                         <View style={focused ? styles.activeIconContainer : null}>
-                            <Ionicons name="bag" size={focused ? size + 2 : size - 1} color={color} />
+                            <Ionicons name="bag" size={focused ? size : size - 4} color={color} />
                         </View>
                     ),
                     headerTitle: 'My Bags',
@@ -79,7 +79,7 @@ export default function TabLayout() {
                         ]}>
                             <Ionicons
                                 name="add"
-                                size={32}
+                                size={26}
                                 color={colors.tabIconAdd}
                             />
                         </View>
@@ -98,7 +98,7 @@ export default function TabLayout() {
                     title: 'Scan',
                     tabBarIcon: ({ color, size, focused }) => (
                         <View style={focused ? styles.activeIconContainer : null}>
-                            <Ionicons name="scan" size={focused ? size + 2 : size - 1} color={color} />
+                            <Ionicons name="scan" size={focused ? size : size - 4} color={color} />
                         </View>
                     ),
                     headerTitle: 'Scan Bag',
@@ -110,7 +110,7 @@ export default function TabLayout() {
                     title: 'Profile',
                     tabBarIcon: ({ color, size, focused }) => (
                         <View style={focused ? styles.activeIconContainer : null}>
-                            <Ionicons name="person" size={focused ? size + 2 : size - 1} color={color} />
+                            <Ionicons name="person" size={focused ? size : size - 4} color={color} />
                         </View>
                     ),
                     headerTitle: 'Profile',
@@ -132,9 +132,9 @@ const styles = StyleSheet.create({
         borderRadius: 1.5,
     },
     fabContainer: {
-        width: 48,
-        height: 48,
-        borderRadius: 24,
+        width: 42,
+        height: 42,
+        borderRadius: 21,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 12,
