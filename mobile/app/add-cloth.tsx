@@ -26,8 +26,23 @@ const COLORS = [
 ];
 
 const CATEGORIES = [
-    'Shirts', 'Pants', 'Dresses', 'Jackets', 'Sweaters',
-    'Shorts', 'Skirts', 'Suits', 'Accessories', 'Other'
+    'Saree',
+    'Salwar Suit',
+    'Lehengas',
+    'Dupattas & Stoles',
+    'Kurta',
+    'Skirt',
+    'Shirt',
+    'T-shirt',
+    'Jeans',
+    'Trouser',
+    'Suits',
+    'Jacket',
+    'Sweater',
+    'Accessories',
+    'Bedsheet',
+    'Blanket',
+    'Other'
 ];
 
 export default function AddClothScreen() {

@@ -102,12 +102,14 @@ export const ClothModal: React.FC<ClothModalProps> = ({
 
                 <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                     {/* Image */}
-                    <View style={styles.imageContainer}>
-                        <Image
-                            source={{ uri: cloth.imageUrl }}
-                            style={styles.image}
-                            resizeMode="contain"
-                        />
+                    <View style={styles.imageWrapper}>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                source={{ uri: cloth.imageUrl }}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
                     </View>
 
                     {/* Details */}
@@ -224,10 +226,17 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
     },
+    imageWrapper: {
+        paddingHorizontal: Spacing.lg,
+        paddingTop: Spacing.lg,
+    },
     imageContainer: {
-        width: width,
-        height: width * 0.8,
+        width: '100%',
+        aspectRatio: 1,
+        borderRadius: BorderRadius.lg,
+        overflow: 'hidden',
         backgroundColor: '#f0f0f0',
+        marginBottom: Spacing.lg,
     },
     image: {
         width: '100%',
