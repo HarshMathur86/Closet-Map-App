@@ -10,7 +10,7 @@ import {
     Alert,
     ActivityIndicator,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -44,6 +44,7 @@ export default function AddClothScreen() {
 
     const { colors } = useTheme();
     const router = useRouter();
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         fetchBags();
@@ -319,7 +320,10 @@ export default function AddClothScreen() {
             </ScrollView>
 
             {/* Submit Button */}
-            <View style={[styles.footer, { backgroundColor: colors.background }]}>
+            <View style={[
+                styles.footer,
+                { backgroundColor: colors.background, paddingBottom: Math.max(insets.bottom, 24) }
+            ]}>
                 <TouchableOpacity
                     style={[styles.submitButton, { opacity: loading ? 0.7 : 1 }]}
                     onPress={handleSubmit}
