@@ -27,8 +27,8 @@ export default function TabLayout() {
                     elevation: 0,
                 },
                 tabBarItemStyle: {
-                    paddingTop: 8,
-                    paddingBottom: bottomPadding > 0 ? 0 : 8,
+                    paddingTop: 4,
+                    paddingBottom: bottomPadding > 0 ? 2 : 6,
                 },
                 tabBarLabelStyle: {
                     fontSize: 12,
