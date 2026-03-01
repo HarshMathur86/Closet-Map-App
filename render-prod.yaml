@@ -1,0 +1,20 @@
+# Exported from Render on 2026-02-24T16:40:30Z
+version: "1"
+projects:
+- name: Closet Map App
+  environments:
+  - name: Production
+    services:
+    - type: web
+      name: Closet-Map-App-Backend-prod
+      runtime: node
+      repo: https://github.com/HarshMathur86/Closet-Map-App
+      plan: free
+      envVars:
+      - fromGroup: Production
+      region: virginia
+      buildCommand: npm install
+      startCommand: npm start
+      healthCheckPath: /health
+      autoDeployTrigger: commit
+      rootDir: backend
