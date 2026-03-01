@@ -1,13 +1,14 @@
 import { View, StyleSheet } from 'react-native';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../context/ThemeContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
-    const { colors } = useTheme();
+    const { colors, isDark } = useTheme();
     const insets = useSafeAreaInsets();
     const bottomPadding = insets.bottom;
+    const router = useRouter();
 
     return (
         <Tabs
@@ -62,6 +63,32 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
+                name="add"
+                options={{
+                    title: '',
+                    tabBarIcon: ({ focused }) => (
+                        <View style={[
+                            styles.fabContainer,
+                            {
+                                backgroundColor: colors.primary,
+                            }
+                        ]}>
+                            <Ionicons
+                                name="add"
+                                size={32}
+                                color={colors.tabIconAdd}
+                            />
+                        </View>
+                    ),
+                }}
+                listeners={{
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        router.push('/add-cloth');
+                    },
+                }}
+            />
+            <Tabs.Screen
                 name="scan"
                 options={{
                     title: 'Scan',
@@ -99,5 +126,13 @@ const styles = StyleSheet.create({
         width: 16,
         height: 3,
         borderRadius: 1.5,
+    },
+    fabContainer: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 12,
     }
 });
