@@ -337,7 +337,10 @@ export default function AddClothScreen() {
             {/* Submit Button */}
             <View style={[
                 styles.footer,
-                { backgroundColor: colors.background, paddingBottom: Math.max(insets.bottom, 24) }
+                {
+                    backgroundColor: colors.background,
+                    paddingBottom: Math.max(insets.bottom, 12)
+                }
             ]}>
                 <TouchableOpacity
                     style={[styles.submitButton, { opacity: loading ? 0.7 : 1 }]}
@@ -481,8 +484,8 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        padding: Spacing.lg,
-        paddingBottom: Spacing.xl,
+        paddingHorizontal: Spacing.lg,
+        paddingTop: 12,
     },
     submitButton: {
         borderRadius: BorderRadius.md,

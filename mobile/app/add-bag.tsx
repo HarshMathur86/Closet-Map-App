@@ -84,7 +84,10 @@ export default function AddBagScreen() {
             {/* Submit Button */}
             <View style={[
                 styles.footer,
-                { backgroundColor: colors.background, paddingBottom: Math.max(insets.bottom, 24) }
+                {
+                    backgroundColor: colors.background,
+                    paddingBottom: Math.max(insets.bottom, 12)
+                }
             ]}>
                 <TouchableOpacity
                     style={[styles.submitButton, { opacity: loading ? 0.7 : 1 }]}
@@ -168,8 +171,8 @@ const styles = StyleSheet.create({
         lineHeight: 20,
     },
     footer: {
-        padding: Spacing.lg,
-        paddingBottom: Spacing.xl,
+        paddingHorizontal: Spacing.lg,
+        paddingTop: 12,
     },
     submitButton: {
         borderRadius: BorderRadius.md,
