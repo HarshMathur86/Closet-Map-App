@@ -7,7 +7,7 @@ export const Colors = {
         secondary: '#EC4899',      // Pink accent
         background: '#F4F3FF',
         surface: '#F9F8FF',
-        surfaceVariant: '#EEEBFF',
+        surfaceVariant: '#EAE6FF',
         text: '#0F172A',
         textSecondary: '#64748B',
         textMuted: '#94A3B8',
