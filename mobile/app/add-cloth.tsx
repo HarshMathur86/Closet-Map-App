@@ -10,6 +10,7 @@ import {
     Alert,
     ActivityIndicator,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
@@ -161,10 +162,13 @@ export default function AddClothScreen() {
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-            <ScrollView
+            <KeyboardAwareScrollView
                 style={styles.scrollView}
                 contentContainerStyle={styles.content}
                 showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+                enableOnAndroid={true}
+                extraScrollHeight={20}
             >
                 {/* Image Picker */}
                 <TouchableOpacity
@@ -332,7 +336,7 @@ export default function AddClothScreen() {
                         numberOfLines={3}
                     />
                 </View>
-            </ScrollView>
+            </KeyboardAwareScrollView>
 
             {/* Submit Button */}
             <View style={[

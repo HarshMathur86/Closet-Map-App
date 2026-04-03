@@ -24,6 +24,7 @@
       },
       "package": "com.harshmathur86.closetmap.clothsinventory",
       "edgeToEdgeEnabled": true,
+      "softwareKeyboardLayoutMode": "resize",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"

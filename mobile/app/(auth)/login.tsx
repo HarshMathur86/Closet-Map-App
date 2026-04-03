@@ -9,6 +9,7 @@ import {
     Platform,
     Alert,
     Image,
+    ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, useRouter } from 'expo-router';
@@ -50,104 +51,110 @@ export default function LoginScreen() {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.keyboardView}
             >
-                {/* Header */}
-                <View style={styles.header}>
-                    <View style={styles.logoContainer}>
-                        <Image
-                            source={require('../../assets/adaptive-icon.png')}
-                            style={styles.logoImage}
-                            resizeMode="contain"
-                        />
-                    </View>
-                    {/* <Text style={[styles.title, { color: colors.text }]}>Closet Map</Text> */}
-                    <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-                        Track your clothes, find them anywhere
-                    </Text>
-                </View>
-
-                {/* Form */}
-                <View style={styles.form}>
-                    {error && (
-                        <View style={[styles.errorContainer, { backgroundColor: `${colors.error}20` }]}>
-                            <Ionicons name="alert-circle" size={20} color={colors.error} />
-                            <Text style={[styles.errorText, { color: colors.error }]}>{error}</Text>
-                            <TouchableOpacity onPress={clearError}>
-                                <Ionicons name="close" size={18} color={colors.error} />
-                            </TouchableOpacity>
-                        </View>
-                    )}
-
-                    <View style={styles.inputContainer}>
-                        <Text style={[styles.label, { color: colors.textSecondary }]}>Email</Text>
-                        <View style={[styles.inputWrapper, { backgroundColor: colors.surfaceVariant, borderColor: colors.border }]}>
-                            <Ionicons name="mail-outline" size={20} color={colors.textMuted} />
-                            <TextInput
-                                style={[styles.input, { color: colors.text }]}
-                                placeholder="Enter your email"
-                                placeholderTextColor={colors.textMuted}
-                                value={email}
-                                onChangeText={setEmail}
-                                autoCapitalize="none"
-                                keyboardType="email-address"
-                                autoComplete="email"
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollContent}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    {/* Header */}
+                    <View style={styles.header}>
+                        <View style={styles.logoContainer}>
+                            <Image
+                                source={require('../../assets/adaptive-icon.png')}
+                                style={styles.logoImage}
+                                resizeMode="contain"
                             />
                         </View>
+                        {/* <Text style={[styles.title, { color: colors.text }]}>Closet Map</Text> */}
+                        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+                            Track your clothes, find them anywhere
+                        </Text>
                     </View>
 
-                    <View style={styles.inputContainer}>
-                        <Text style={[styles.label, { color: colors.textSecondary }]}>Password</Text>
-                        <View style={[styles.inputWrapper, { backgroundColor: colors.surfaceVariant, borderColor: colors.border }]}>
-                            <Ionicons name="lock-closed-outline" size={20} color={colors.textMuted} />
-                            <TextInput
-                                style={[styles.input, { color: colors.text }]}
-                                placeholder="Enter your password"
-                                placeholderTextColor={colors.textMuted}
-                                value={password}
-                                onChangeText={setPassword}
-                                secureTextEntry={!showPassword}
-                                autoComplete="password"
-                            />
-                            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                                <Ionicons
-                                    name={showPassword ? 'eye-off-outline' : 'eye-outline'}
-                                    size={20}
-                                    color={colors.textMuted}
+                    {/* Form */}
+                    <View style={styles.form}>
+                        {error && (
+                            <View style={[styles.errorContainer, { backgroundColor: `${colors.error}20` }]}>
+                                <Ionicons name="alert-circle" size={20} color={colors.error} />
+                                <Text style={[styles.errorText, { color: colors.error }]}>{error}</Text>
+                                <TouchableOpacity onPress={clearError}>
+                                    <Ionicons name="close" size={18} color={colors.error} />
+                                </TouchableOpacity>
+                            </View>
+                        )}
+
+                        <View style={styles.inputContainer}>
+                            <Text style={[styles.label, { color: colors.textSecondary }]}>Email</Text>
+                            <View style={[styles.inputWrapper, { backgroundColor: colors.surfaceVariant, borderColor: colors.border }]}>
+                                <Ionicons name="mail-outline" size={20} color={colors.textMuted} />
+                                <TextInput
+                                    style={[styles.input, { color: colors.text }]}
+                                    placeholder="Enter your email"
+                                    placeholderTextColor={colors.textMuted}
+                                    value={email}
+                                    onChangeText={setEmail}
+                                    autoCapitalize="none"
+                                    keyboardType="email-address"
+                                    autoComplete="email"
                                 />
-                            </TouchableOpacity>
+                            </View>
                         </View>
+
+                        <View style={styles.inputContainer}>
+                            <Text style={[styles.label, { color: colors.textSecondary }]}>Password</Text>
+                            <View style={[styles.inputWrapper, { backgroundColor: colors.surfaceVariant, borderColor: colors.border }]}>
+                                <Ionicons name="lock-closed-outline" size={20} color={colors.textMuted} />
+                                <TextInput
+                                    style={[styles.input, { color: colors.text }]}
+                                    placeholder="Enter your password"
+                                    placeholderTextColor={colors.textMuted}
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    secureTextEntry={!showPassword}
+                                    autoComplete="password"
+                                />
+                                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                                    <Ionicons
+                                        name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                                        size={20}
+                                        color={colors.textMuted}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                        <TouchableOpacity
+                            style={[styles.loginButton, { opacity: isLoading ? 0.7 : 1 }]}
+                            onPress={handleLogin}
+                            disabled={isLoading}
+                        >
+                            <LinearGradient
+                                colors={[colors.primary, colors.primaryDark]}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 0 }}
+                                style={styles.loginGradient}
+                            >
+                                {isLoading ? (
+                                    <Text style={styles.loginText}>Signing in...</Text>
+                                ) : (
+                                    <Text style={styles.loginText}>Sign In</Text>
+                                )}
+                            </LinearGradient>
+                        </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity
-                        style={[styles.loginButton, { opacity: isLoading ? 0.7 : 1 }]}
-                        onPress={handleLogin}
-                        disabled={isLoading}
-                    >
-                        <LinearGradient
-                            colors={[colors.primary, colors.primaryDark]}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
-                            style={styles.loginGradient}
-                        >
-                            {isLoading ? (
-                                <Text style={styles.loginText}>Signing in...</Text>
-                            ) : (
-                                <Text style={styles.loginText}>Sign In</Text>
-                            )}
-                        </LinearGradient>
-                    </TouchableOpacity>
-                </View>
-
-                {/* Footer */}
-                <View style={styles.footer}>
-                    <Text style={[styles.footerText, { color: colors.textSecondary }]}>
-                        Don't have an account?{' '}
-                    </Text>
-                    <Link href="/(auth)/signup" asChild>
-                        <TouchableOpacity>
-                            <Text style={[styles.linkText, { color: colors.primary }]}>Sign Up</Text>
-                        </TouchableOpacity>
-                    </Link>
-                </View>
+                    {/* Footer */}
+                    <View style={styles.footer}>
+                        <Text style={[styles.footerText, { color: colors.textSecondary }]}>
+                            Don't have an account?{' '}
+                        </Text>
+                        <Link href="/(auth)/signup" asChild>
+                            <TouchableOpacity>
+                                <Text style={[styles.linkText, { color: colors.primary }]}>Sign Up</Text>
+                            </TouchableOpacity>
+                        </Link>
+                    </View>
+                </ScrollView>
             </KeyboardAvoidingView>
         </SafeAreaView>
     );
@@ -159,6 +166,9 @@ const styles = StyleSheet.create({
     },
     keyboardView: {
         flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
         justifyContent: 'center',
         padding: Spacing.lg,
     },

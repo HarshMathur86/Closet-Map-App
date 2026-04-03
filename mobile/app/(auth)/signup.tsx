@@ -64,6 +64,7 @@ export default function SignupScreen() {
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scrollContent}
+                    keyboardShouldPersistTaps="handled"
                 >
                     {/* Header */}
                     <View style={styles.header}>
@@ -179,6 +180,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     scrollContent: {
+        flexGrow: 1,
         padding: Spacing.lg,
         paddingTop: Spacing.xl,
     },

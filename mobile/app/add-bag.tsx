@@ -7,6 +7,9 @@ import {
     StyleSheet,
     Alert,
     ActivityIndicator,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -48,69 +51,80 @@ export default function AddBagScreen() {
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={styles.content}>
-                {/* Icon */}
-                <View style={[styles.iconContainer, { backgroundColor: colors.surfaceVariant }]}>
-                    <Ionicons name="bag" size={64} color={colors.primary} />
-                </View>
-
-                <Text style={[styles.title, { color: colors.text }]}>Create New Bag</Text>
-                <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-                    Give your bag a name to help you identify it
-                </Text>
-
-                {/* Name Input */}
-                <View style={styles.inputContainer}>
-                    <Text style={[styles.label, { color: colors.textSecondary }]}>Bag Name</Text>
-                    <TextInput
-                        style={[styles.input, { backgroundColor: colors.surfaceVariant, color: colors.text }]}
-                        value={name}
-                        onChangeText={setName}
-                        placeholder="e.g., Winter Clothes, Kids Room"
-                        placeholderTextColor={colors.textMuted}
-                        autoFocus
-                    />
-                </View>
-
-                {/* Info */}
-                <View style={[styles.infoBox, { backgroundColor: `${colors.primary}15` }]}>
-                    <Ionicons name="information-circle" size={20} color={colors.primary} />
-                    <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-                        A unique barcode will be automatically generated for this bag
-                    </Text>
-                </View>
-            </View>
-
-            {/* Submit Button */}
-            <View style={[
-                styles.footer,
-                {
-                    backgroundColor: colors.background,
-                    paddingBottom: Math.max(insets.bottom, 12)
-                }
-            ]}>
-                <TouchableOpacity
-                    style={[styles.submitButton, { opacity: loading ? 0.7 : 1 }]}
-                    onPress={handleSubmit}
-                    disabled={loading}
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={styles.keyboardView}
+            >
+                <ScrollView
+                    contentContainerStyle={styles.scrollContent}
+                    showsVerticalScrollIndicator={false}
+                    keyboardShouldPersistTaps="handled"
                 >
-                    <LinearGradient
-                        colors={[colors.primary, colors.primaryDark]}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                        style={styles.submitGradient}
-                    >
-                        {loading ? (
-                            <ActivityIndicator color="white" />
-                        ) : (
-                            <>
-                                <Ionicons name="checkmark" size={20} color="white" />
-                                <Text style={styles.submitText}>Create Bag</Text>
-                            </>
-                        )}
-                    </LinearGradient>
-                </TouchableOpacity>
-            </View>
+                    <View style={styles.content}>
+                        {/* Icon */}
+                        <View style={[styles.iconContainer, { backgroundColor: colors.surfaceVariant }]}>
+                            <Ionicons name="bag" size={64} color={colors.primary} />
+                        </View>
+
+                        <Text style={[styles.title, { color: colors.text }]}>Create New Bag</Text>
+                        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+                            Give your bag a name to help you identify it
+                        </Text>
+
+                        {/* Name Input */}
+                        <View style={styles.inputContainer}>
+                            <Text style={[styles.label, { color: colors.textSecondary }]}>Bag Name</Text>
+                            <TextInput
+                                style={[styles.input, { backgroundColor: colors.surfaceVariant, color: colors.text }]}
+                                value={name}
+                                onChangeText={setName}
+                                placeholder="e.g., Winter Clothes, Kids Room"
+                                placeholderTextColor={colors.textMuted}
+                                autoFocus
+                            />
+                        </View>
+
+                        {/* Info */}
+                        <View style={[styles.infoBox, { backgroundColor: `${colors.primary}15` }]}>
+                            <Ionicons name="information-circle" size={20} color={colors.primary} />
+                            <Text style={[styles.infoText, { color: colors.textSecondary }]}>
+                                A unique barcode will be automatically generated for this bag
+                            </Text>
+                        </View>
+                    </View>
+
+                    {/* Submit Button */}
+                    <View style={[
+                        styles.footer,
+                        {
+                            backgroundColor: colors.background,
+                            paddingBottom: Math.max(insets.bottom, 12)
+                        }
+                    ]}>
+                        <TouchableOpacity
+                            style={[styles.submitButton, { opacity: loading ? 0.7 : 1 }]}
+                            onPress={handleSubmit}
+                            disabled={loading}
+                        >
+                            <LinearGradient
+                                colors={[colors.primary, colors.primaryDark]}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 0 }}
+                                style={styles.submitGradient}
+                            >
+                                {loading ? (
+                                    <ActivityIndicator color="white" />
+                                ) : (
+                                    <>
+                                        <Ionicons name="checkmark" size={20} color="white" />
+                                        <Text style={styles.submitText}>Create Bag</Text>
+                                    </>
+                                )}
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 }
@@ -118,6 +132,12 @@ export default function AddBagScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    keyboardView: {
+        flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
     },
     content: {
         flex: 1,
