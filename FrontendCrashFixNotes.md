@@ -71,3 +71,7 @@ npm run android
 ```
 
 *(Note: If you run this often, you can add the two `export` lines to your `~/.zshrc` file. This will make them permanent for all future terminal windows.)*
+
+```bash
+cd mobile && npx expo prebuild --platform android --clean && npx expo run:android
+```
