@@ -60,11 +60,13 @@ app.use('/api/export', exportRoutes);
  */
 // Root health endpoint for cloud platform health checks (e.g., Render)
 app.get('/health', (req, res) => {
+  console.log('health check - 200 OK');
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // API health endpoint
 app.get('/api/health', (req, res) => {
+  console.log('API health check - 200 OK');
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
