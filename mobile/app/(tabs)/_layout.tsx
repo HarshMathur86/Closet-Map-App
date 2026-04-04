@@ -1,10 +1,14 @@
 import { View, StyleSheet } from 'react-native';
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../context/ThemeContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
-    const { colors } = useTheme();
+    const { colors, isDark } = useTheme();
+    const insets = useSafeAreaInsets();
+    const bottomPadding = insets.bottom;
+    const router = useRouter();
 
     return (
         <Tabs
@@ -12,13 +16,19 @@ export default function TabLayout() {
                 tabBarActiveTintColor: colors.primary,
                 tabBarInactiveTintColor: colors.textMuted,
                 tabBarStyle: {
+                    // position: 'absolute',
+                    // bottom: 0,
+                    // left: 0,
+                    // right: 0,
                     backgroundColor: colors.surface,
                     borderTopWidth: 0,
-                    height: 88,
+                    height: 60 + bottomPadding,
+                    paddingBottom: bottomPadding,
                     elevation: 0,
                 },
                 tabBarItemStyle: {
-                    paddingTop: 8,
+                    paddingTop: 4,
+                    paddingBottom: bottomPadding > 0 ? 2 : 6,
                 },
                 tabBarLabelStyle: {
                     fontSize: 12,
@@ -38,7 +48,7 @@ export default function TabLayout() {
                     title: 'Clothes',
                     tabBarIcon: ({ color, size, focused }) => (
                         <View style={focused ? styles.activeIconContainer : null}>
-                            <Ionicons name="shirt" size={focused ? size + 2 : size - 1} color={color} />
+                            <Ionicons name="shirt" size={focused ? size : size - 4} color={color} />
                         </View>
                     ),
                     headerTitle: 'My Wardrobe',
@@ -50,10 +60,36 @@ export default function TabLayout() {
                     title: 'Bags',
                     tabBarIcon: ({ color, size, focused }) => (
                         <View style={focused ? styles.activeIconContainer : null}>
-                            <Ionicons name="bag" size={focused ? size + 2 : size - 1} color={color} />
+                            <Ionicons name="bag" size={focused ? size : size - 4} color={color} />
                         </View>
                     ),
                     headerTitle: 'My Bags',
+                }}
+            />
+            <Tabs.Screen
+                name="add"
+                options={{
+                    title: '',
+                    tabBarIcon: ({ focused }) => (
+                        <View style={[
+                            styles.fabContainer,
+                            {
+                                backgroundColor: colors.primary,
+                            }
+                        ]}>
+                            <Ionicons
+                                name="add"
+                                size={26}
+                                color={colors.tabIconAdd}
+                            />
+                        </View>
+                    ),
+                }}
+                listeners={{
+                    tabPress: (e) => {
+                        e.preventDefault();
+                        router.push('/add-cloth');
+                    },
                 }}
             />
             <Tabs.Screen
@@ -62,7 +98,7 @@ export default function TabLayout() {
                     title: 'Scan',
                     tabBarIcon: ({ color, size, focused }) => (
                         <View style={focused ? styles.activeIconContainer : null}>
-                            <Ionicons name="scan" size={focused ? size + 2 : size - 1} color={color} />
+                            <Ionicons name="scan" size={focused ? size : size - 4} color={color} />
                         </View>
                     ),
                     headerTitle: 'Scan Bag',
@@ -74,7 +110,7 @@ export default function TabLayout() {
                     title: 'Profile',
                     tabBarIcon: ({ color, size, focused }) => (
                         <View style={focused ? styles.activeIconContainer : null}>
-                            <Ionicons name="person" size={focused ? size + 2 : size - 1} color={color} />
+                            <Ionicons name="person" size={focused ? size : size - 4} color={color} />
                         </View>
                     ),
                     headerTitle: 'Profile',
@@ -94,5 +130,13 @@ const styles = StyleSheet.create({
         width: 16,
         height: 3,
         borderRadius: 1.5,
+    },
+    fabContainer: {
+        width: 42,
+        height: 42,
+        borderRadius: 21,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 12,
     }
 });

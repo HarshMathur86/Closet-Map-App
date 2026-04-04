@@ -12,12 +12,27 @@ ClosetMap is a comprehensive mobile application designed to help you organize an
 
 ## Version Information
 
-**Current Release:** v1.4.1
-**Release Date:** 2026-02-24
+**Current Release:** v1.4.2
+**Release Date:** 2026-04-04
 
-### Release Notes
+### Release Notes — v1.4.2
 
-We are excited to announce the release of version 1.4.1. This release introduces significant improvements and bug fixes.
+This release focuses on UI/UX refinements for Android, fixing several layout and overlapping issues to deliver a polished, production-ready experience.
+
+#### 🐛 Bug Fixes
+- **Android Keyboard Overlap Fixed:** Resolved the issue where the on-screen keyboard would cover input fields (Owner, Notes) in the "Add Cloth" modal. Implemented `react-native-keyboard-aware-scroll-view` with `softwareKeyboardLayoutMode: "resize"` for robust keyboard avoidance.
+- **Android Navigation Bar Overlap Fixed:** Fixed UI elements being obscured by the system navigation bar. Applied proper safe area insets across all screens to prevent content from rendering behind system UI.
+
+#### ✨ Improvements
+- **Edge-to-Edge Display:** Achieved a fully immersive Android UI where the app footer and system navigation bar blend seamlessly, with dynamic icon contrast based on the app's theme.
+- **Safe Area Handling:** Added `useSafeAreaInsets` throughout the app to ensure consistent padding and prevent overlap with system bars on all device types.
+- **Version Display Cleanup:** Simplified the version label on the Profile screen — removed the BETA tag and release suffix for a cleaner display.
+- **Dependency Security Updates:** Addressed npm audit vulnerabilities in backend dependencies (`fast-xml-parser`, `@tootallnate/once`, and others via overrides).
+
+---
+
+<details>
+<summary><strong>Previous Release — v1.4.1 (2026-02-24)</strong></summary>
 
 - **Move Items Between Bags Fixed:** Users can now seamlessly move clothes from one bag to another.
 - **Color Selection Palette:** Improved the color selection interface for better usability.
@@ -26,6 +41,8 @@ We are excited to announce the release of version 1.4.1. This release introduces
 - **Swagger API Documentation:** Added Swagger UI for real-time API exploration and testing (available at `/api-docs` in dev mode).
 - **Cloth Inventory:** The core inventory management system is stable and working as expected.
 - **Improved TypeScript Configuration:** Resolved JSX configuration issues for a better development experience.
+
+</details>
 
 ## Known Issues
 

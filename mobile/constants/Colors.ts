@@ -7,7 +7,7 @@ export const Colors = {
         secondary: '#EC4899',      // Pink accent
         background: '#F4F3FF',
         surface: '#F9F8FF',
-        surfaceVariant: '#EEEBFF',
+        surfaceVariant: '#EAE6FF',
         text: '#0F172A',
         textSecondary: '#64748B',
         textMuted: '#94A3B8',
@@ -17,6 +17,7 @@ export const Colors = {
         error: '#EF4444',
         favorite: '#F43F5E',
         shadow: 'rgba(0, 0, 0, 0.1)',
+        tabIconAdd: '#FFFFFF', // Color for the central '+' add button
     },
     dark: {
         primary: '#818CF8',
@@ -35,6 +36,7 @@ export const Colors = {
         error: '#F87171',
         favorite: '#FB7185',
         shadow: 'rgba(0, 0, 0, 0.3)',
+        tabIconAdd: '#FFFFFF', // Color for the central '+' add button
     }
 };
 

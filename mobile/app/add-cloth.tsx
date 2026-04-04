@@ -10,7 +10,8 @@ import {
     Alert,
     ActivityIndicator,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -26,8 +27,23 @@ const COLORS = [
 ];
 
 const CATEGORIES = [
-    'Shirts', 'Pants', 'Dresses', 'Jackets', 'Sweaters',
-    'Shorts', 'Skirts', 'Suits', 'Accessories', 'Other'
+    'Saree',
+    'Salwar Suit',
+    'Lehengas',
+    'Dupattas & Stoles',
+    'Kurta',
+    'Skirt',
+    'Shirt',
+    'T-shirt',
+    'Jeans',
+    'Trouser',
+    'Suits',
+    'Jacket',
+    'Sweater',
+    'Accessories',
+    'Bedsheet',
+    'Blanket',
+    'Other'
 ];
 
 export default function AddClothScreen() {
@@ -44,6 +60,7 @@ export default function AddClothScreen() {
 
     const { colors } = useTheme();
     const router = useRouter();
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         fetchBags();
@@ -145,10 +162,13 @@ export default function AddClothScreen() {
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-            <ScrollView
+            <KeyboardAwareScrollView
                 style={styles.scrollView}
                 contentContainerStyle={styles.content}
                 showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps="handled"
+                enableOnAndroid={true}
+                extraScrollHeight={20}
             >
                 {/* Image Picker */}
                 <TouchableOpacity
@@ -316,10 +336,16 @@ export default function AddClothScreen() {
                         numberOfLines={3}
                     />
                 </View>
-            </ScrollView>
+            </KeyboardAwareScrollView>
 
             {/* Submit Button */}
-            <View style={[styles.footer, { backgroundColor: colors.background }]}>
+            <View style={[
+                styles.footer,
+                {
+                    backgroundColor: colors.background,
+                    paddingBottom: Math.max(insets.bottom, 12)
+                }
+            ]}>
                 <TouchableOpacity
                     style={[styles.submitButton, { opacity: loading ? 0.7 : 1 }]}
                     onPress={handleSubmit}
@@ -462,8 +488,8 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        padding: Spacing.lg,
-        paddingBottom: Spacing.xl,
+        paddingHorizontal: Spacing.lg,
+        paddingTop: 12,
     },
     submitButton: {
         borderRadius: BorderRadius.md,

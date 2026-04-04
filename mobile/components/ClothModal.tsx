@@ -102,12 +102,14 @@ export const ClothModal: React.FC<ClothModalProps> = ({
 
                 <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
                     {/* Image */}
-                    <View style={styles.imageContainer}>
-                        <Image
-                            source={{ uri: cloth.imageUrl }}
-                            style={styles.image}
-                            resizeMode="contain"
-                        />
+                    <View style={styles.imageWrapper}>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                source={{ uri: cloth.imageUrl }}
+                                style={styles.image}
+                                resizeMode="cover"
+                            />
+                        </View>
                     </View>
 
                     {/* Details */}
@@ -177,11 +179,11 @@ export const ClothModal: React.FC<ClothModalProps> = ({
                 {onDelete && (
                     <View style={styles.footer}>
                         <TouchableOpacity
-                            style={[styles.deleteButton, { backgroundColor: colors.error }]}
+                            style={[styles.deleteButton, { borderColor: colors.error }]}
                             onPress={onDelete}
                         >
-                            <Ionicons name="trash-outline" size={20} color="white" />
-                            <Text style={styles.deleteText}>Delete Cloth</Text>
+                            <Ionicons name="trash-outline" size={20} color={colors.error} />
+                            <Text style={[styles.deleteText, { color: colors.error }]}>Delete Cloth</Text>
                         </TouchableOpacity>
                     </View>
                 )}
@@ -224,10 +226,17 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
     },
+    imageWrapper: {
+        paddingHorizontal: Spacing.lg,
+        paddingTop: Spacing.lg,
+    },
     imageContainer: {
-        width: width,
-        height: width * 0.8,
+        width: '100%',
+        aspectRatio: 1,
+        borderRadius: BorderRadius.lg,
+        overflow: 'hidden',
         backgroundColor: '#f0f0f0',
+        marginBottom: Spacing.lg,
     },
     image: {
         width: '100%',
@@ -306,15 +315,15 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: Spacing.md,
+        height: 48,
         borderRadius: BorderRadius.md,
+        borderWidth: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: Spacing.sm,
     },
     deleteText: {
-        color: 'white',
         fontSize: FontSize.md,
         fontWeight: '600',
-        marginLeft: Spacing.sm,
     },
 });

@@ -10,6 +10,8 @@ import {
     Alert,
     Modal,
     TextInput,
+    KeyboardAvoidingView,
+    Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useFocusEffect } from 'expo-router';
@@ -243,40 +245,45 @@ export default function BagsScreen() {
                     activeOpacity={1}
                     onPress={() => setEditModalVisible(false)}
                 >
-                    <SafeAreaView style={[styles.modalContent, { backgroundColor: colors.surface }]}>
-                        <View style={styles.modalHeader}>
-                            <Text style={[styles.modalTitle, { color: colors.text }]}>Edit Bag</Text>
-                            <TouchableOpacity onPress={() => setEditModalVisible(false)}>
-                                <Ionicons name="close" size={24} color={colors.text} />
-                            </TouchableOpacity>
-                        </View>
+                    <KeyboardAvoidingView
+                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                        style={styles.modalKeyboardView}
+                    >
+                        <SafeAreaView style={[styles.modalContent, { backgroundColor: colors.surface }]}>
+                            <View style={styles.modalHeader}>
+                                <Text style={[styles.modalTitle, { color: colors.text }]}>Edit Bag</Text>
+                                <TouchableOpacity onPress={() => setEditModalVisible(false)}>
+                                    <Ionicons name="close" size={24} color={colors.text} />
+                                </TouchableOpacity>
+                            </View>
 
-                        <View style={styles.modalBody}>
-                            <Text style={[styles.label, { color: colors.textSecondary }]}>Bag Name</Text>
-                            <TextInput
-                                style={[styles.input, { backgroundColor: colors.surfaceVariant, color: colors.text }]}
-                                value={editName}
-                                onChangeText={setEditName}
-                                placeholder="Enter bag name"
-                                placeholderTextColor={colors.textMuted}
-                            />
+                            <View style={styles.modalBody}>
+                                <Text style={[styles.label, { color: colors.textSecondary }]}>Bag Name</Text>
+                                <TextInput
+                                    style={[styles.input, { backgroundColor: colors.surfaceVariant, color: colors.text }]}
+                                    value={editName}
+                                    onChangeText={setEditName}
+                                    placeholder="Enter bag name"
+                                    placeholderTextColor={colors.textMuted}
+                                />
 
-                            <TouchableOpacity
-                                style={[styles.saveButton, { backgroundColor: colors.primary }]}
-                                onPress={handleSaveEdit}
-                            >
-                                <Text style={styles.saveButtonText}>Save Changes</Text>
-                            </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[styles.saveButton, { backgroundColor: colors.primary }]}
+                                    onPress={handleSaveEdit}
+                                >
+                                    <Text style={styles.saveButtonText}>Save Changes</Text>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity
-                                style={[styles.deleteButton, { borderColor: colors.error }]}
-                                onPress={handleDeleteBag}
-                            >
-                                <Ionicons name="trash-outline" size={20} color={colors.error} />
-                                <Text style={[styles.deleteButtonText, { color: colors.error }]}>Delete Bag</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </SafeAreaView>
+                                <TouchableOpacity
+                                    style={[styles.deleteButton, { borderColor: colors.error }]}
+                                    onPress={handleDeleteBag}
+                                >
+                                    <Ionicons name="trash-outline" size={20} color={colors.error} />
+                                    <Text style={[styles.deleteButtonText, { color: colors.error }]}>Delete Bag</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </SafeAreaView>
+                    </KeyboardAvoidingView>
                 </TouchableOpacity>
             </Modal>
         </View>
@@ -364,6 +371,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'rgba(0,0,0,0.5)',
         justifyContent: 'flex-end',
+    },
+    modalKeyboardView: {
+        width: '100%',
     },
     modalContent: {
         borderTopLeftRadius: BorderRadius.xl,

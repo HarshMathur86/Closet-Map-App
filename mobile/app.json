@@ -2,7 +2,7 @@
   "expo": {
     "name": "ClosetMap",
     "slug": "closetmap",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -24,6 +24,7 @@
       },
       "package": "com.harshmathur86.closetmap.clothsinventory",
       "edgeToEdgeEnabled": true,
+      "softwareKeyboardLayoutMode": "resize",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"

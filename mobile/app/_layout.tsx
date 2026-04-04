@@ -4,7 +4,8 @@ import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 import { ThemeProvider, useTheme } from '../context/ThemeContext';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, Platform } from 'react-native';
+import * as NavigationBar from 'expo-navigation-bar';
 
 function RootLayoutNav() {
     const { user, loading } = useAuth();
@@ -25,6 +26,17 @@ function RootLayoutNav() {
             router.replace('/(tabs)');
         }
     }, [user, loading, segments]);
+
+    useEffect(() => {
+        // Modern Android Edge-to-Edge implementation
+        // We do not use `setBackgroundColorAsync` or `setPositionAsync` here because 
+        // `edgeToEdgeEnabled: true` natively manages transparency and position, and overrides will warn.
+        if (Platform.OS === 'android') {
+            NavigationBar.setButtonStyleAsync(isDark ? 'light' : 'dark').catch(() => {
+                // Silently fails if native module isn't built yet during dev
+            });
+        }
+    }, [isDark]);
 
     if (loading) {
         return (
