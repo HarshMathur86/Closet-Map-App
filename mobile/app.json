@@ -23,7 +23,6 @@
         "backgroundColor": "#F4F3FF"
       },
       "package": "com.harshmathur86.closetmap.clothsinventory",
-      "edgeToEdgeEnabled": true,
       "softwareKeyboardLayoutMode": "resize",
       "permissions": [
         "android.permission.CAMERA",
@@ -52,7 +51,8 @@
           "photosPermission": "Allow ClosetMap to access your photos to add cloth images"
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-sharing"
     ],
     "extra": {
       "router": {
