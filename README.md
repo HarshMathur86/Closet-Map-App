@@ -12,12 +12,23 @@ ClosetMap is a comprehensive mobile application designed to help you organize an
 
 ## Version Information
 
-**Current Release:** v1.4.2
-**Release Date:** 2026-04-04
+**Current Release:** v1.4.3
+**Release Date:** 2026-05-30
 
-### Release Notes — v1.4.2
+### Release Notes — v1.4.3
 
-This release focuses on UI/UX refinements for Android, fixing several layout and overlapping issues to deliver a polished, production-ready experience.
+This release addresses dependency security vulnerabilities and fixes a critical Android bundling issue.
+
+#### 🐛 Bug Fixes
+- **Android Bundling Fixed:** Resolved a Metro bundler crash caused by a missing `buffer` polyfill dependency. The `services/api.ts` module imported `Buffer` from `'buffer'` (used for base64 PDF export), but the package was never added to `package.json`. Installed the `buffer` package to restore successful Android builds.
+
+#### 🔒 Security
+- **Dependency Vulnerability Remediation:** Ran `npm audit fix` across both backend and mobile projects, resolving all known vulnerabilities. Both projects now report **0 vulnerabilities** on audit.
+
+---
+
+<details>
+<summary><strong>Previous Release — v1.4.2 (2026-04-04)</strong></summary>
 
 #### 🐛 Bug Fixes
 - **Android Keyboard Overlap Fixed:** Resolved the issue where the on-screen keyboard would cover input fields (Owner, Notes) in the "Add Cloth" modal. Implemented `react-native-keyboard-aware-scroll-view` with `softwareKeyboardLayoutMode: "resize"` for robust keyboard avoidance.
@@ -29,7 +40,7 @@ This release focuses on UI/UX refinements for Android, fixing several layout and
 - **Version Display Cleanup:** Simplified the version label on the Profile screen — removed the BETA tag and release suffix for a cleaner display.
 - **Dependency Security Updates:** Addressed npm audit vulnerabilities in backend dependencies (`fast-xml-parser`, `@tootallnate/once`, and others via overrides).
 
----
+</details>
 
 <details>
 <summary><strong>Previous Release — v1.4.1 (2026-02-24)</strong></summary>
