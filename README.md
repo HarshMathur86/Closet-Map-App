@@ -12,10 +12,20 @@ ClosetMap is a comprehensive mobile application designed to help you organize an
 
 ## Version Information
 
-**Current Release:** v1.4.3
-**Release Date:** 2026-05-30
+**Current Release:** v1.4.4
+**Release Date:** 2026-07-02
 
-### Release Notes — v1.4.3
+### Release Notes — v1.4.4
+
+This release resolves Node.js / Metro bundler security vulnerabilities surfaced by `npm audit`.
+
+#### 🔒 Security
+- **Metro Node Vulnerability Fix:** Addressed known security vulnerabilities in transitive dependencies pulled in by Metro bundler (the React Native / Expo JavaScript bundler). Applied targeted `overrides` in `mobile/package.json` to pin affected packages (`tar`, `send`, `semver`, `brace-expansion`, `postcss`, `protobufjs`, `ws`, `uuid`) to their patched versions. Both backend and mobile projects now report **0 vulnerabilities** on `npm audit`.
+
+---
+
+<details>
+<summary><strong>Previous Release — v1.4.3 (2026-05-30)</strong></summary>
 
 This release addresses dependency security vulnerabilities and fixes a critical Android bundling issue.
 
@@ -24,6 +34,8 @@ This release addresses dependency security vulnerabilities and fixes a critical 
 
 #### 🔒 Security
 - **Dependency Vulnerability Remediation:** Ran `npm audit fix` across both backend and mobile projects, resolving all known vulnerabilities. Both projects now report **0 vulnerabilities** on audit.
+
+</details>
 
 ---
 

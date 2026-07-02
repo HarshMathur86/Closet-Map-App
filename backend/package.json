@@ -1,6 +1,6 @@
 {
   "name": "closetmap-backend",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Backend for Clothes Inventory & Bag Tracking App",
   "main": "server.js",
   "scripts": {
