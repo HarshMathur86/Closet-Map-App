@@ -12,12 +12,51 @@ ClosetMap is a comprehensive mobile application designed to help you organize an
 
 ## Version Information
 
-**Current Release:** v1.4.2
-**Release Date:** 2026-04-04
+**Current Release:** v1.4.5
+**Release Date:** 2026-08-28
 
-### Release Notes — v1.4.2
+### Release Notes — v1.4.5
 
-This release focuses on UI/UX refinements for Android, fixing several layout and overlapping issues to deliver a polished, production-ready experience.
+This release updates the project version to v1.4.5 across both the frontend and backend, resolves frontend and backend npm vulnerabilities, and fixes Expo SDK package version compatibility issues.
+
+#### 🔒 Security
+- **Frontend Vulnerability Remediation:** Addressed high-severity npm vulnerabilities in the mobile project (including the security flaw in the transient dependency `image-size` used by Metro) by applying an override in `mobile/package.json` (resolving to `npm:image-size-next@^2.1.1`).
+- **Backend Dependency Upgrades:** Upgraded backend dependencies (`body-parser`, `js-yaml`, `mongoose`, `protobufjs`, and `websocket-driver`) to secure versions. Both mobile and backend projects now report **0 vulnerabilities** on `npm audit`.
+
+#### ⚙️ Maintenance & Tooling
+- **Expo SDK Compatibility Fixes:** Resolved package mismatch errors flagged by `expo-doctor` by upgrading dependencies (including `expo`, `expo-camera`, `expo-dev-client`, `expo-image-picker`, `expo-linear-gradient`, `expo-linking`, `expo-navigation-bar`, `expo-router`, `expo-sharing`, and `react-native`) to compatible versions required by Expo SDK 55.
+
+---
+
+<details>
+<summary><strong>Previous Release — v1.4.4 (2026-07-02)</strong></summary>
+
+This release resolves Node.js / Metro bundler security vulnerabilities surfaced by `npm audit`.
+
+#### 🔒 Security
+- **Metro Node Vulnerability Fix:** Addressed known security vulnerabilities in transitive dependencies pulled in by Metro bundler (the React Native / Expo JavaScript bundler). Applied targeted `overrides` in `mobile/package.json` to pin affected packages (`tar`, `send`, `semver`, `brace-expansion`, `postcss`, `protobufjs`, `ws`, `uuid`) to their patched versions. Both backend and mobile projects now report **0 vulnerabilities** on `npm audit`.
+
+</details>
+
+---
+
+<details>
+<summary><strong>Previous Release — v1.4.3 (2026-05-30)</strong></summary>
+
+This release addresses dependency security vulnerabilities and fixes a critical Android bundling issue.
+
+#### 🐛 Bug Fixes
+- **Android Bundling Fixed:** Resolved a Metro bundler crash caused by a missing `buffer` polyfill dependency. The `services/api.ts` module imported `Buffer` from `'buffer'` (used for base64 PDF export), but the package was never added to `package.json`. Installed the `buffer` package to restore successful Android builds.
+
+#### 🔒 Security
+- **Dependency Vulnerability Remediation:** Ran `npm audit fix` across both backend and mobile projects, resolving all known vulnerabilities. Both projects now report **0 vulnerabilities** on audit.
+
+</details>
+
+---
+
+<details>
+<summary><strong>Previous Release — v1.4.2 (2026-04-04)</strong></summary>
 
 #### 🐛 Bug Fixes
 - **Android Keyboard Overlap Fixed:** Resolved the issue where the on-screen keyboard would cover input fields (Owner, Notes) in the "Add Cloth" modal. Implemented `react-native-keyboard-aware-scroll-view` with `softwareKeyboardLayoutMode: "resize"` for robust keyboard avoidance.
@@ -29,7 +68,7 @@ This release focuses on UI/UX refinements for Android, fixing several layout and
 - **Version Display Cleanup:** Simplified the version label on the Profile screen — removed the BETA tag and release suffix for a cleaner display.
 - **Dependency Security Updates:** Addressed npm audit vulnerabilities in backend dependencies (`fast-xml-parser`, `@tootallnate/once`, and others via overrides).
 
----
+</details>
 
 <details>
 <summary><strong>Previous Release — v1.4.1 (2026-02-24)</strong></summary>

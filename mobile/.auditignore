@@ -1,0 +1,7 @@
+# image-size advisories (GHSA-w3rx-r6r6-pgpr, GHSA-5p2g-fcmc-qvqq)
+# The latest image-size@2.0.2 is already installed via `overrides`.
+# npm's advisory database still flags <=2.0.2 but no patched version exists yet.
+# These advisories only affect server-side image parsing by Metro (dev bundler only).
+# Re-evaluate when a new image-size release is published fixing these CVEs.
+1138808
+1138809
