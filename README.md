@@ -17,7 +17,14 @@ ClosetMap is a comprehensive mobile application designed to help you organize an
 
 ### Release Notes — v1.4.5
 
-This release updates the project version to v1.4.5 across both the frontend and backend.
+This release updates the project version to v1.4.5 across both the frontend and backend, resolves frontend and backend npm vulnerabilities, and fixes Expo SDK package version compatibility issues.
+
+#### 🔒 Security
+- **Frontend Vulnerability Remediation:** Addressed high-severity npm vulnerabilities in the mobile project (including the security flaw in the transient dependency `image-size` used by Metro) by applying an override in `mobile/package.json` (resolving to `npm:image-size-next@^2.1.1`).
+- **Backend Dependency Upgrades:** Upgraded backend dependencies (`body-parser`, `js-yaml`, `mongoose`, `protobufjs`, and `websocket-driver`) to secure versions. Both mobile and backend projects now report **0 vulnerabilities** on `npm audit`.
+
+#### ⚙️ Maintenance & Tooling
+- **Expo SDK Compatibility Fixes:** Resolved package mismatch errors flagged by `expo-doctor` by upgrading dependencies (including `expo`, `expo-camera`, `expo-dev-client`, `expo-image-picker`, `expo-linear-gradient`, `expo-linking`, `expo-navigation-bar`, `expo-router`, `expo-sharing`, and `react-native`) to compatible versions required by Expo SDK 55.
 
 ---
 
