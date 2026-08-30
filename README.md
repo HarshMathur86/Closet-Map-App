@@ -3,7 +3,7 @@
   <h1>ClosetMap - The Wardrobe App</h1>
 </div>
 
-<a href="https://github.com/HarshMathur86/Closet-Map-App/releases/download/Stable-1.4.2/ClosetMap-v1.4.2.apk">
+<a href="https://github.com/HarshMathur86/Closet-Map-App/releases/download/Stable-1.4.5/ClosetMap-v1.4.5.apk">
   <img src="https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android" alt="Download APK">
 </a>
 
