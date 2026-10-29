@@ -1,12 +1,13 @@
 {
   "name": "closetmap-mobile",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.10",
+    "patch-package": "^8.0.1",
     "react-native-dotenv": "^3.4.11",
     "typescript": "~5.9.2"
   },
@@ -47,12 +49,15 @@
     "tar": "^7.5.8",
     "send": "^0.19.0",
     "semver": "^7.5.2",
-    "brace-expansion": "^5.0.6",
+    "brace-expansion": "^5.0.12",
     "postcss": "^8.5.10",
     "protobufjs": "^7.5.8",
     "ws": "^8.21.0",
     "uuid": "^11.1.1",
-    "image-size": "npm:image-size-next@^2.1.1"
+    "image-size": "npm:image-size-next@^2.1.1",
+    "@grpc/grpc-js": "^1.13.6",
+    "decode-uri-component": "^0.5.0",
+    "zod": "^4.6.6"
   },
   "private": true
 }
